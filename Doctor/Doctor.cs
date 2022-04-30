@@ -36,6 +36,130 @@ public class Doctor
         return "Doctor [id: " + id + ", name: " + name + ", email: " + email + ", password: " + password + ", field: " + field + ", doctor appointment: [" + appointments + "]]";
     }
     
+    public void ReviewTimetable(){
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        foreach (int appointmentId in this.doctorAppointments){
+            
+            foreach (DoctorAppointment appointment in appointments.allDoctorAppointments){
+                if (appointment.id==appointmentId){
+                    Console.WriteLine(appointment);
+                }
+            }
+        }
+        
+    }
+
+    public static Doctor FindDoctorById(int id){
+        
+        DoctorsFactory doctors = new DoctorsFactory("Data/doctors.json");
+        foreach (Doctor doctor in doctors.allDoctors){
+            if (doctor.id == id){
+                return doctor;
+            }
+        }
+        return null;
+    }
+
+    public DoctorAppointment FindDoctorsAppointmentById(int id){
+        
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        foreach (DoctorAppointment doctorsAppointment in appointments.allDoctorAppointments){
+            if (doctorsAppointment.id == id){
+                return doctorsAppointment;
+            }
+        }
+        return null;
+    }
+
+    public void DeleteAppointment(){
+        Console.WriteLine("Enter appointment's id you want to delete: ");
+        int id=Convert.ToInt32(Console.ReadLine());
+        DoctorAppointment appointmentToDelete=DoctorAppointment.FindById(id);
+        Console.WriteLine(appointmentToDelete);
+
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        appointments.allDoctorAppointments.Remove(appointmentToDelete);
+        DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
+
+        this.doctorAppointments.Remove(id);
+    }
+
+    public bool SetUpAppointment(List<DateTime> availableDates){
+        DateTime dateTime=Convert.ToDateTime(Console.ReadLine());
+        if(availableDates.Contains(dateTime)){
+            Console.WriteLine("This date is not available.");
+            return false;
+        }
+        return true;
+    }
+
+    public void UpdateAppointment(Doctor doctor){
+        int option=0;
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        ReviewTimetable();
+        DoctorAppointment appointmentToChange=null;
+
+        Console.WriteLine("Enter id of the appointment you want to change: ");
+        int id=Convert.ToInt32(Console.ReadLine());
+        foreach(DoctorAppointment appointment in appointments.allDoctorAppointments){
+            if (appointment.id==id){
+                appointmentToChange=appointment;
+            }
+
+        }
+        if (appointmentToChange!=null){
+            while(option!=3){
+                Console.WriteLine("What do you want to update? (Select number)");
+                Console.WriteLine("1. Date and time\n2. Emergency\n3. Exit");
+                option=Convert.ToInt32(Console.ReadLine());
+                if (option==1 ||option==2 ){
+                    if(option==1){
+                        ReviewTimetable();
+                    }
+                    appointments.allDoctorAppointments.Remove(appointmentToChange);
+                    appointmentToChange.UpdateDoctorAppointment(option);
+                    appointments.allDoctorAppointments.Add(appointmentToChange);
+                    DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
+
+                }
+                else if (option!=3){
+                    Console.WriteLine("Wrong option entered.");
+                }
+            }}
+        else{
+            Console.WriteLine("Wrong id endered.");
+        }
+    }
+
+    public List<DateTime> CheckAvailability(DateTime dateAndTime){
+        String start="2022-04-30T08:00:00";
+        DateTime startDate=Convert.ToDateTime(start);
+
+        List<DateTime> available=new List<DateTime>();
+        List<DoctorAppointment> appointments=new List<DoctorAppointment>();
+
+        foreach(int appointment in this.doctorAppointments){
+            appointments.Add(FindDoctorsAppointmentById(appointment));
+        }
+
+        for (var i=0;i<=2;i++){
+            int unavailableAppointment=0;
+            while(startDate.Hour!=20){
+                DoctorAppointment temp= FindDoctorsAppointmentById(unavailableAppointment);
+                if(Convert.ToDateTime(startDate)!=available[0]){
+                    available.Add(startDate);
+                    Console.WriteLine(Convert.ToString(startDate.Hour),Convert.ToString(startDate.Minute));
+                }
+                else{
+                    Console.WriteLine("Unavailable date.");
+                }
+            }
+
+            startDate.AddDays(1);
+        }
+        return available;
+    }
+    
     public static void doctorMenu(Doctor doctor){
         Console.WriteLine("Welcome, "+doctor.name+ "!");
         
