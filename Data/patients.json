@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "name": "Andrea Katzenberger",
+    "email": "andreak@gmail.com",
+    "password": "andrea123",
+    "medicalRecord": {
+      "height": 170,
+      "weight": 52.1,
+      "bloodType": "A+",
+      "previousIllnesses": [],
+      "allergens": []
+    },
+    "blocked": 0,
+    "recipes": [
+      {
+        "id": 1,
+        "medicines": [
+          {
+            "name": "brufen",
+            "allergens": [],
+            "description": "opis brufena"
+          }
+        ],
+        "perDay": [
+          2
+        ],
+        "duration": 10
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Bojana Popov",
+    "email": "bojanapopov@gmail.com",
+    "password": "bojana123",
+    "medicalRecord": {
+      "height": 162,
+      "weight": 64.0,
+      "bloodType": "A-",
+      "previousIllnesses": [],
+      "allergens": []
+    },
+    "blocked": 0,
+    "recipes": [
+      {
+        "id": 1,
+        "medicines": [
+          {
+            "name": "brufen",
+            "allergens": [],
+            "description": "opis brufena"
+          }
+        ],
+        "perDay": [
+          2
+        ],
+        "duration": 10
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Pera Peric",
+    "email": "peric@gmail.com",
+    "password": "pera123",
+    "medicalRecord": {
+      "height": 185,
+      "weight": 80.0,
+      "bloodType": "A-",
+      "previousIllnesses": [],
+      "allergens": [
+        "penicillin",
+        "sulfonamides"
+      ]
+    },
+    "blocked": 1,
+    "recipes": []
+  },
+  {
+    "id": 5,
+    "name": "Katarina Popov",
+    "email": "katapopov@gmail.com",
+    "password": "kata123",
+    "medicalRecord": {
+      "height": 160,
+      "weight": 52.0,
+      "bloodType": "A-",
+      "previousIllnesses": [],
+      "allergens": [
+        "fur"
+      ]
+    },
+    "blocked": 0,
+    "recipes": []
+  },
+  {
+    "id": 6,
+    "name": "Zoran Zoric",
+    "email": "zoricz99@gmail.com",
+    "password": "zoki123",
+    "medicalRecord": {
+      "height": 190,
+      "weight": 80.0,
+      "bloodType": "B+",
+      "previousIllnesses": [],
+      "allergens": [
+        "fur"
+      ]
+    },
+    "blocked": 0,
+    "recipes": []
+  }
+]
