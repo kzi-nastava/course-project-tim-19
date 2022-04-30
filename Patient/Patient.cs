@@ -241,4 +241,51 @@ public class Patient
         }
     }
     
+    public static void BlockAccount(List<Patient> allPatients){
+        Console.WriteLine("Enter patient's id:");
+        var id = Convert.ToInt32(Console.ReadLine());
+        var foundPatient = FindById(id, allPatients);
+        if (foundPatient == null){
+            Console.WriteLine("You can't block patient that doesn't exist.");
+            return;
+        }
+        foundPatient.blocked = (Blocked)1;
+        UpdateData(allPatients);
+        Console.WriteLine("You successfully blocked " + foundPatient.name + "'s account!");
+    }
+
+    public static void UnblockAccount(List<Patient> allPatients){
+        Console.WriteLine("Enter patient's id:");
+        var id = Convert.ToInt32(Console.ReadLine());
+        var foundPatient = FindById(id, allPatients);
+        if (foundPatient == null){
+            Console.WriteLine("You can't unblock patient that doesn't exist.");
+            return;
+        }
+        if (foundPatient.blocked != (Blocked)1){
+            Console.WriteLine("You can't unblock patient that isn't already blocked.");
+            return;
+        }
+        foundPatient.blocked = (Blocked)0;
+        UpdateData(allPatients);
+        Console.WriteLine("You successfully unblocked " + foundPatient.name + "'s account!");
+    }
+
+    public static void ViewAllBlockedPatients(List<Patient> allPatients){ //make table
+        List<Patient> blockedPatients = new List<Patient>();
+        foreach(Patient patient in allPatients){
+            if (patient.blocked == (Blocked)1){
+                blockedPatients.Add(patient);
+            }
+        }
+        if (blockedPatients.Count() == 0){
+            Console.WriteLine("There's none blocked patients!");
+        } else {
+            Console.WriteLine("Blocked patients:");
+            foreach(Patient patient in blockedPatients){
+                Console.WriteLine(patient);
+            }
+        }
+    }
+    
 }
