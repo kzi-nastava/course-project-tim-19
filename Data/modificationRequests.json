@@ -1,0 +1,14 @@
+[
+    {
+        "appointmentsId": 4,
+        "doctorsId": 0,
+        "dateTime": "0001-01-01T00:00:00",
+        "emergency": 0
+    },
+    {
+        "appointmentsId": 5,
+        "doctorsId": 0,
+        "dateTime": "2022-06-01T11:00:00",
+        "emergency": 2
+    }
+]
