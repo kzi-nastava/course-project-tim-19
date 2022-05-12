@@ -36,6 +36,20 @@ public class Doctor
         return "Doctor [id: " + id + ", name: " + name + ", email: " + email + ", password: " + password + ", field: " + field + ", doctor appointment: [" + appointments + "]]";
     }
     
+    public static Doctor FindById(int id, List<Doctor> allDoctors){
+        foreach (Doctor doctor in allDoctors){
+            if (doctor.id == id){
+                return doctor;
+            }
+        }
+        return null;
+    }
+
+    public static void UpdateData(List<Doctor> allDoctors){
+        var convertedDoctors = JsonConvert.SerializeObject(allDoctors, Formatting.Indented);
+        File.WriteAllText("Data/doctors.json", convertedDoctors);
+    }
+    
     public void ReviewTimetable(){
         DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
         foreach (int appointmentId in this.doctorAppointments){
