@@ -43,16 +43,26 @@ public class DoctorAppointment
         DoctorAppointment appointment = FindById(appointmentsId);
         allAppointments.Remove(appointment);
         UpdateData(allAppointments);
-        Doctor doctor = Doctor.FindById(appointment.doctorsId, allDoctors);
-        allDoctors.Remove(doctor);
-        doctor.doctorAppointments.Remove(appointment);
-        allDoctors.Add(doctor);
-        Doctor.UpdateData(allDoctors);
+        try {
+            Doctor doctor = Doctor.FindById(appointment.doctorsId, allDoctors);
+            var foundDoctor = allDoctors.SingleOrDefault(x => x.id == doctor.id);
+            if (foundDoctor != null) {
+                allDoctors.Remove(foundDoctor);
+            }
+            doctor.doctorAppointments.Remove(appointmentsId);
+            allDoctors.Add(doctor);
+            Doctor.UpdateData(allDoctors);
+        } catch (NullReferenceException e) {
+
+        }
     }
 
     public static void Update(ModificationRequest request, List<DoctorAppointment> allAppointments, List<Doctor> allDoctors){
         DoctorAppointment appointment = FindById(request.appointmentsId);
-        allAppointments.Remove(appointment);
+        var foundAppointment = allAppointments.SingleOrDefault(x => x.id == appointment.id);
+            if (foundAppointment != null) {
+                allAppointments.Remove(foundAppointment);
+            }
         if (request.doctorsId != 0){
             appointment.doctorsId = request.doctorsId;
         }
@@ -65,12 +75,6 @@ public class DoctorAppointment
         }
         allAppointments.Add(appointment);
         UpdateData(allAppointments);
-        Doctor doctor = Doctor.FindById(appointment.doctorsId, allDoctors);
-        allDoctors.Remove(doctor);
-        doctor.doctorAppointments.Remove(appointment);
-        doctor.doctorAppointments.Add(appointment);
-        allDoctors.Add(doctor);
-        Doctor.UpdateData(allDoctors);
     }
     
     public static void CreateAppointment(Doctor doctor){
