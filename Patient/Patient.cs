@@ -13,6 +13,7 @@ public class Patient
     public MedicalRecord medicalRecord {get; set; }
     public Blocked blocked { get; set; }
     public List<Recipe> recipes { get; set; }
+    public int referralsId { get; set; }
 
     public Patient(int id, string name, string email, string password, MedicalRecord medicalRecord, Blocked blocked,List<Recipe> recipes){
         this.id = id;
@@ -22,6 +23,7 @@ public class Patient
         this.medicalRecord = medicalRecord;
         this.blocked = blocked;
         this.recipes = recipes;
+        this.referralsId = 0;
     }
 
     public override string ToString()
@@ -30,7 +32,7 @@ public class Patient
         foreach (var recipe in recipes){
             allRecipes += recipe.ToString();
         }
-        return "Patient [id: " + id + ", name: " + name + ", email: " + email + ", password: " + password + ", medicalRecord: " + medicalRecord + ", blocked: " + blocked + ", recipes: [" + allRecipes + "]]";
+        return "Patient [id: " + id + ", name: " + name + ", email: " + email + ", password: " + password + ", medicalRecord: " + medicalRecord + ", blocked: " + blocked + ", recipes: [" + allRecipes + "], referral's id: " + referralsId+ "]";
     }
     
     public static void UpdateData(List<Patient> allPatients){
