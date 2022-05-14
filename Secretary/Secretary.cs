@@ -34,7 +34,7 @@ public class Secretary{
         Console.WriteLine("Welcome, " + secretary.name + "!");
         Console.WriteLine("MENU FOR SECRETARY");
         while (true){
-            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Log out");
+            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Create urgent appointment\n5. Log out");
             Console.WriteLine("Enter the option: ");
             var optionForMainMenu = Console.ReadLine();
             if (optionForMainMenu == "1"){
@@ -94,6 +94,11 @@ public class Secretary{
                     }
                 }
             } else if (optionForMainMenu == "4"){
+                Console.WriteLine("Enter patient's id: ");
+                var patientsId = Console.ReadLine();
+                int field = Doctor.FindField();
+                DoctorAppointment.CreateUrgentAppointment(Convert.ToInt32(patientsId), (Field)field, patientsFactory.allPatients, doctorsFactory.allDoctors, doctorAppointmentsFactory.allDoctorAppointments);
+            } else if (optionForMainMenu == "5"){
                 break;
             } else {
                 Console.WriteLine("You entered wrong option! Please try again.");

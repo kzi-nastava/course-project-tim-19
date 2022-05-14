@@ -39,6 +39,30 @@ public class DoctorAppointment
         var convertedAppointments = JsonConvert.SerializeObject(allAppointments, Formatting.Indented);
         File.WriteAllText("Data/doctorAppointments.json", convertedAppointments);
     }
+
+    public static int FindNextIdForAppointment(List<DoctorAppointment> allAppointments){
+        List<int> allIds = new List<int>();
+        foreach (DoctorAppointment appointment in allAppointments){
+            allIds.Add(appointment.id);
+        }
+        for (int i = 0; i < MAX_APPOINTMENTS; ++i){
+            if (!allIds.Contains(i)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public static DoctorAppointment FindByDoctorAndDate(Doctor doctor, DateTime date){
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        foreach (DoctorAppointment appointment in appointments.allDoctorAppointments){
+            if (appointment.doctorsId == doctor.id && appointment.dateTime == date){
+                return appointment;
+            }
+        }
+        return null;
+    }
+
     public static void Delete(int appointmentsId, List<DoctorAppointment> allAppointments, List<Doctor> allDoctors){
         DoctorAppointment appointment = FindById(appointmentsId);
         allAppointments.Remove(appointment);
@@ -130,7 +154,81 @@ public class DoctorAppointment
         }
         return dates.Contains(date);
     }
+
+    const int MAX_APPOINTMENTS = 100; //can be changed
     
+public static void CreateUrgentAppointment(int patientsId, Field doctorsField, List<Patient> allPatients, List<Doctor> allDoctors, List<DoctorAppointment> allAppointments){
+        Doctor foundDoctor = Doctor.FindByField(doctorsField, allDoctors);
+        List<DateTime> firstAvaibleAppointments = FindAvaibleAppointment(foundDoctor);
+        Patient patient = Patient.FindById(patientsId, allPatients);
+        if (firstAvaibleAppointments.Count == 1){
+            DoctorAppointment urgentAppointment = new DoctorAppointment(FindNextIdForAppointment(allAppointments), foundDoctor.id, patient, firstAvaibleAppointments[0], (Emergency)0);
+        } else {
+            Console.WriteLine("There's no avaible time in the next two hours.");
+            Console.WriteLine("Here are the first five appointments that can be rescheduled: ");
+            for (int i = 0; i < firstAvaibleAppointments.Count; i++){
+                Console.WriteLine(i+1 + "." + firstAvaibleAppointments[i].ToString());
+            }
+            Console.WriteLine("Enter the option: ");
+            var chosenDate = Console.ReadLine();
+            DoctorAppointment appointmentToReschedule = FindByDoctorAndDate(foundDoctor, firstAvaibleAppointments[Convert.ToInt32(chosenDate)]);
+            var appointmentToRemove = allAppointments.SingleOrDefault(x => x.id == appointmentToReschedule.id);
+            if (appointmentToRemove != null) {
+                allAppointments.Remove(appointmentToRemove);
+            }
+            Console.WriteLine("Enter the date.\nYear: ");
+            var year = Console.ReadLine();
+            Console.WriteLine("Month: ");
+            var month = Console.ReadLine();
+            Console.WriteLine("Day: ");
+            var day = Console.ReadLine();
+            Console.WriteLine("Hour: ");
+            var hour = Console.ReadLine();
+            Console.WriteLine("Minutes: ");
+            var minutes = Console.ReadLine();
+            var newDateTime = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day), Convert.ToInt32(hour), Convert.ToInt32(minutes), 00);
+            if (!CheckAvailability(foundDoctor.id, allDoctors, newDateTime)){
+                DoctorAppointment rescheduledAppointment = new DoctorAppointment(appointmentToReschedule.id, appointmentToReschedule.doctorsId, appointmentToReschedule.patient, newDateTime, appointmentToReschedule.emergency);
+            }
+            UpdateData(allAppointments);
+        }
+    }
+
+    public static List<DateTime> FindAvaibleAppointment(Doctor foundDoctor){
+        List<DateTime> unavaibleDates = new List<DateTime>();
+        List<DateTime> avaibleDates = new List<DateTime>();
+        foreach (int appointmentId in foundDoctor.doctorAppointments){
+                try {
+                    DoctorAppointment appointment = DoctorAppointment.FindById(appointmentId);
+                    unavaibleDates.Add(appointment.dateTime);
+                } catch (NullReferenceException e) {
+
+                }
+            }
+        for (int i = 0; i < 2; i ++) {
+            int j = 0;
+            while (j < 60){
+                DateTime now = new DateTime(2022, 5, 14, 12 + i, j, 0); //change to current time
+                avaibleDates.Add(now);
+                j += 15;
+            }
+        }
+        foreach (DateTime date in unavaibleDates) {
+            if (avaibleDates.Contains(date)){
+                avaibleDates.Remove(date);
+            }
+        }
+        List<DateTime> finalDateTime = new List<DateTime>();
+        if (avaibleDates.Count != 0){
+            finalDateTime.Add(avaibleDates[0]);
+        } else {
+            for (int i = 0; i < 5; i++){
+                finalDateTime.Add(unavaibleDates[i]);
+            }
+        }
+        return finalDateTime;
+    }
+
     public static void CreateAppointment(Doctor doctor){
 
         Console.WriteLine("Create new appointment");

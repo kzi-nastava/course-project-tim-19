@@ -45,6 +45,26 @@ public class Doctor
         return null;
     }
 
+    public static Doctor FindByField(Field field, List<Doctor> allDoctors){
+        foreach (Doctor doctor in allDoctors){
+            if (doctor.field == field){
+                return doctor;
+            }
+        }
+        return null;
+    }
+
+    public static int FindField(){
+        Console.WriteLine("Avaible fields: ");
+        Console.WriteLine("1. Surgeon\n2. Cardiologist\n3. Psychiatrist\n 4. Radiologiss\n5. Ophthalmologist\n 6.Paediatrician");
+        Console.WriteLine("Enter the option: ");
+        var chosenField = Console.ReadLine();
+        if (Convert.ToInt32(chosenField) == 1 || Convert.ToInt32(chosenField) == 2 || Convert.ToInt32(chosenField) == 3 || Convert.ToInt32(chosenField) == 4 ||Convert.ToInt32(chosenField) == 5 || Convert.ToInt32(chosenField) == 6){
+            return Convert.ToInt32(chosenField)-1;
+        }
+        return -1;
+    }
+
     public static void UpdateData(List<Doctor> allDoctors){
         var convertedDoctors = JsonConvert.SerializeObject(allDoctors, Formatting.Indented);
         File.WriteAllText("Data/doctors.json", convertedDoctors);
