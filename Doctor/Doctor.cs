@@ -324,6 +324,29 @@ public class Doctor
                         }
 
                     }
+                    Console.WriteLine("Do you want to refer patient to another doctor\n(type yes or no)");
+                    string answer=Console.ReadLine();
+                    if (answer=="yes"){
+                        Console.WriteLine("Enter id of the referral: ");
+                        int referralsId=Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter id of the doctor: ");
+                        int doctorsId=Convert.ToInt32(Console.ReadLine());
+                        int patientsId=appointmentToDo.patient.id;
+
+                        Referral referral=new Referral(referralsId,patientsId,doctorsId);
+                        
+                        
+                        ReferralsFactory referrals = new ReferralsFactory("Data/referrals.json");
+                        referrals.allRefferals.Add(referral);
+                        ReferralsFactory.UpdateReferrals(referrals.allRefferals);
+
+                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
+                        patients.allPatients.Remove(appointmentToDo.patient);
+                        appointmentToDo.patient.referralsId=referralsId;
+                        patients.allPatients.Add(appointmentToDo.patient);
+                        PatientsFactory.UpdatePatients(patients.allPatients);
+
+                    }
                 }
             }
         }        
