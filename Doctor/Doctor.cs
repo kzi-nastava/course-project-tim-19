@@ -360,16 +360,9 @@ public class Doctor
                         appointmentToDo.patient.recipes.Add(recipeId);
                         patients.allPatients.Add(appointmentToDo.patient);
                         PatientsFactory.UpdatePatients(patients.allPatients);
-<<<<<<< Updated upstream
-                    }}
-                    
-            
-        }       
-    }}}
-=======
 
                     }
-
+                    
                     
                     Console.WriteLine("Do you want to make a recipe?\n(type yes or no)"); //NOVO
                     answer=Console.ReadLine();
@@ -412,9 +405,9 @@ public class Doctor
                         patients.allPatients.Add(appointmentToDo.patient);
                         PatientsFactory.UpdatePatients(patients.allPatients);
                     }
+
                 }
             }
         }        
     }}
->>>>>>> Stashed changes
 }
