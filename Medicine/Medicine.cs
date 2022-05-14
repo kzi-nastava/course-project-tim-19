@@ -1,11 +1,13 @@
 public class Medicine
 {
+    public int id{get;set;}
     public string name{ get; set; }
     public List<string> allergens { get; set; }
     public string description { get; set; }
     //public int quantity { get; set; }
 
-    public Medicine(string name, List<string> allergens, string description){
+    public Medicine(int id,string name, List<string> allergens, string description){
+        this.id=id;
         this.name = name;
         this.allergens = allergens;
         this.description = description;
@@ -18,6 +20,6 @@ public class Medicine
         foreach (var allergen in allergens){
             allergens += allergen + " ";
         }
-        return "Medicine [name: " + name + ", allergens: [" + allergens + "], description: " + description + "]";
+        return "Medicine [id "+id+", name: " + name + ", allergens: [" + allergens + "], description: " + description + "]";
     }
 }
