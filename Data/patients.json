@@ -12,22 +12,7 @@
       "allergens": []
     },
     "blocked": 0,
-    "recipes": [
-      {
-        "id": 1,
-        "medicines": [
-          {
-            "name": "brufen",
-            "allergens": [],
-            "description": "opis brufena"
-          }
-        ],
-        "perDay": [
-          2
-        ],
-        "duration": 10
-      }
-    ],
+    "recipes": [1,2],
     "referralsId": 1
   },
   {
@@ -43,22 +28,7 @@
       "allergens": []
     },
     "blocked": 0,
-    "recipes": [
-      {
-        "id": 1,
-        "medicines": [
-          {
-            "name": "brufen",
-            "allergens": [],
-            "description": "opis brufena"
-          }
-        ],
-        "perDay": [
-          2
-        ],
-        "duration": 10
-      }
-    ],
+    "recipes": [1],
     "referralsId": 2
   },
   {
