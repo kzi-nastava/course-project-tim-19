@@ -324,44 +324,13 @@ public class Doctor
                         }
 
                     }
-<<<<<<< Updated upstream
-=======
-                    Console.WriteLine("Do you want to refer patient to another doctor\n(type yes or no)");
-                    string answer=Console.ReadLine();
-                    if (answer=="yes"){
-                        Console.WriteLine("Enter id of the referral: ");
-                        int referralsId=Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter id of the doctor: ");
-                        int doctorsId=Convert.ToInt32(Console.ReadLine());
-                        int patientsId=appointmentToDo.patient.id;
-
-                        Referral referral=new Referral(referralsId,patientsId,doctorsId);
-                        
-                        
-                        ReferralsFactory referrals = new ReferralsFactory("Data/referrals.json");
-                        referrals.allRefferals.Add(referral);
-                        ReferralsFactory.UpdateReferrals(referrals.allRefferals);
-
-                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                        patients.allPatients.Remove(appointmentToDo.patient);
-                        appointmentToDo.patient.referralsId=referralsId;
-                        patients.allPatients.Add(appointmentToDo.patient);
-                        PatientsFactory.UpdatePatients(patients.allPatients);
-
-                    }
-
                 
-                
->>>>>>> Stashed changes
-                }
-                
+            
                     Console.WriteLine("Do you want to make a recipe?\n(type yes or no)"); //NOVO
                     answer=Console.ReadLine();
                     if (answer=="yes"){
                         Console.WriteLine("Enter id of recipe: "); //NOVO
                         int recipeId=Convert.ToInt32(Console.ReadLine());
-
-
                         Console.WriteLine("Enter id of medicine: ");
                         int medicineId=Convert.ToInt32(Console.ReadLine());
                         List<int> medicineIds=new List<int>();
@@ -375,16 +344,12 @@ public class Doctor
                                 Console.WriteLine("Enter id of medicine: ");
                                 medicineId=Convert.ToInt32(Console.ReadLine());
                                 medicineIds.Add(medicineId);
-
                             }
-
                         }
-
                         Console.WriteLine("How many times per day patient should use medicines?");
                         int timesPerDay=Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("For how many days patient have to consume medicines?");
                         int days=Convert.ToInt32(Console.ReadLine());
-
                         Recipe recipe= new Recipe(recipeId,medicineIds,timesPerDay,days);
                         
                         RecipesFactory recipes = new RecipesFactory("Data/recipes.json");
@@ -395,10 +360,9 @@ public class Doctor
                         appointmentToDo.patient.recipes.Add(recipeId);
                         patients.allPatients.Add(appointmentToDo.patient);
                         PatientsFactory.UpdatePatients(patients.allPatients);
-
-                    }
-                        
-            }
-        }        
-    }}
+                    }}
+                    
+            
+        }       
+    }}}
 }
