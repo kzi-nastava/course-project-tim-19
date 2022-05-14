@@ -367,6 +367,49 @@ public class Doctor
                         PatientsFactory.UpdatePatients(patients.allPatients);
 
                     }
+                    
+                                        Console.WriteLine("Do you want to make a recipe?\n(type yes or no)"); //NOVO
+                    answer=Console.ReadLine();
+                    if (answer=="yes"){
+                        Console.WriteLine("Enter id of recipe: "); //NOVO
+                        int recipeId=Convert.ToInt32(Console.ReadLine());
+
+
+                        Console.WriteLine("Enter id of medicine: ");
+                        int medicineId=Convert.ToInt32(Console.ReadLine());
+                        List<int> medicineIds=new List<int>();
+                        medicineIds.Add(medicineId);
+                        int moreMedicines=1;
+                        while(option!=2){
+                            Console.WriteLine("Do you want to enter more medicines?\n1.yes\n2.no");
+                            
+                            moreMedicines=Convert.ToInt32(Console.ReadLine());
+                            if(moreMedicines==1){
+                                Console.WriteLine("Enter id of medicine: ");
+                                medicineId=Convert.ToInt32(Console.ReadLine());
+                                medicineIds.Add(medicineId);
+
+                            }
+
+                        }
+
+                        Console.WriteLine("How many times per day patient should use medicines?");
+                        int timesPerDay=Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("For how many days patient have to consume medicines?");
+                        int days=Convert.ToInt32(Console.ReadLine());
+
+                        Recipe recipe= new Recipe(recipeId,medicineIds,timesPerDay,days);
+                        
+                        RecipesFactory recipes = new RecipesFactory("Data/recipes.json");
+                        recipes.allRecipes.Add(recipe);
+                        
+                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
+                        patients.allPatients.Remove(appointmentToDo.patient);
+                        appointmentToDo.patient.recipes.Add(recipeId);
+                        patients.allPatients.Add(appointmentToDo.patient);
+                        PatientsFactory.UpdatePatients(patients.allPatients);
+
+                    }
                 }
             }
         }        
