@@ -29,10 +29,12 @@ public class Secretary{
         DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
         DeletionRequestsFactory deletionRequestsFactory = new DeletionRequestsFactory("Data/deletionRequests.json");
         ModificationRequestsFactory modificationRequestsFactory = new ModificationRequestsFactory("Data/modificationRequests.json");
+        DoctorsFactory doctorsFactory = new DoctorsFactory("Data/doctors.json");
+        ReferralsFactory referralsFectory = new ReferralsFactory("Data/referrals.json");
         Console.WriteLine("Welcome, " + secretary.name + "!");
         Console.WriteLine("MENU FOR SECRETARY");
         while (true){
-            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Log out");
+            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Log out");
             Console.WriteLine("Enter the option: ");
             var optionForMainMenu = Console.ReadLine();
             if (optionForMainMenu == "1"){
@@ -76,6 +78,22 @@ public class Secretary{
                     }
                 }
             } else if (optionForMainMenu == "3"){
+                while (true) {
+                    Console.WriteLine("1. View all patients with referrals\n2. Create appointment for patient\n3. Back");
+                    Console.WriteLine("Enter the option:");
+                    var optionForReferralsMenu = Console.ReadLine();
+                    if (optionForReferralsMenu == "1"){
+                        Patient.ViewAllPatientsWithReferral(patientsFactory.allPatients);
+                    } else if (optionForReferralsMenu == "2"){
+                        Referral referral = Referral.FindReferralByPatient(patientsFactory.allPatients);
+                        DoctorAppointment.CreateViaReferral(referral.referralsId, referralsFectory.allRefferals, referral.patientsId, referral.doctorsId, patientsFactory.allPatients, doctorsFactory.allDoctors, doctorAppointmentsFactory.allDoctorAppointments);
+                    } else if (optionForReferralsMenu == "3"){
+                        break;
+                    } else {
+                        Console.WriteLine("You entered wrong option! Please try again.");
+                    }
+                }
+            } else if (optionForMainMenu == "4"){
                 break;
             } else {
                 Console.WriteLine("You entered wrong option! Please try again.");
