@@ -289,5 +289,22 @@ public class Patient
             }
         }
     }
+
+    public static void ViewAllPatientsWithReferral(List<Patient> allPatients){
+        List<Patient> patientsWithReferral = new List<Patient>();
+        foreach(Patient patient in allPatients){
+            if(patient.referralsId != 0){
+                patientsWithReferral.Add(patient);
+            }
+        }
+        if (patientsWithReferral.Count() == 0){
+            Console.WriteLine("There's none patients with referrals!");
+        } else {
+            Console.WriteLine("Patients with referral:");
+            foreach(Patient patient in patientsWithReferral){
+                Console.WriteLine(patient);
+            }
+        }
+    }
     
 }

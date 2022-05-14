@@ -76,6 +76,60 @@ public class DoctorAppointment
         allAppointments.Add(appointment);
         UpdateData(allAppointments);
     }
+
+    
+    public static void CreateViaReferral(int referralsId, List<Referral> allReferrals, int patientsId, int doctorsId, List<Patient> allPatients, List<Doctor> allDoctors, List<DoctorAppointment> allAppointments) {
+        Console.WriteLine("Enter appointment's id: ");
+        var appointmentsId = Console.ReadLine();
+        Patient patient = Patient.FindById(patientsId, allPatients);
+        Console.WriteLine("Enter the date.\nYear: ");
+        var year = Console.ReadLine();
+        Console.WriteLine("Month: ");
+        var month = Console.ReadLine();
+        Console.WriteLine("Day: ");
+        var day = Console.ReadLine();
+        Console.WriteLine("Hour: ");
+        var hour = Console.ReadLine();
+        Console.WriteLine("Minutes: ");
+        var minutes = Console.ReadLine();
+        var newDateTime = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day), Convert.ToInt32(hour), Convert.ToInt32(minutes), 00);
+        if (!CheckAvailability(doctorsId, allDoctors, newDateTime)){
+            DoctorAppointment newAppointment = new DoctorAppointment(Convert.ToInt32(appointmentsId), doctorsId, patient, newDateTime, (Emergency)1);
+            allAppointments.Add(newAppointment);
+            UpdateData(allAppointments);
+            Doctor doctor = Doctor.FindById(doctorsId, allDoctors);
+            var foundDoctor = allDoctors.SingleOrDefault(x => x.id == doctor.id);
+            if (foundDoctor != null) {
+                allDoctors.Remove(foundDoctor);
+            }
+            doctor.doctorAppointments.Add(Convert.ToInt32(appointmentsId));
+            allDoctors.Add(doctor);
+            Doctor.UpdateData(allDoctors);
+            Referral referral = Referral.FindById(referralsId);
+            var foundReferral = allReferrals.SingleOrDefault(x => x.referralsId == referral.referralsId);
+            if (foundReferral != null) {
+                allReferrals.Remove(foundReferral);
+            }
+            Referral.UpdateData(allReferrals);
+            Console.WriteLine("You successfully created a new appointment!");
+        } else {
+            Console.WriteLine("Doctor is not avaible at that time.");
+        }
+    }
+    
+    public static bool CheckAvailability(int doctorsId, List<Doctor> allDoctors, DateTime date){
+        Doctor doctor = Doctor.FindById(doctorsId, allDoctors);
+        List<DateTime> dates = new List<DateTime>();
+        foreach(int i in doctor.doctorAppointments){
+            try{
+                DoctorAppointment appointment = DoctorAppointment.FindById(i);
+                dates.Add(appointment.dateTime);
+            } catch (NullReferenceException e) {
+
+            }
+        }
+        return dates.Contains(date);
+    }
     
     public static void CreateAppointment(Doctor doctor){
 
