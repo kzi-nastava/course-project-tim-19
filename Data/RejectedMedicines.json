@@ -1,0 +1,11 @@
+[
+  {
+    "medicine": {
+      "id": 7,
+      "name": "Panadol2",
+      "allergens": ["al1", "al2"],
+      "description": "Description of the medicine."
+    },
+    "comment": "Invalid allergens."
+  }
+]
