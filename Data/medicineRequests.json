@@ -1,0 +1,20 @@
+[
+  {
+    "id": 4,
+    "name": "Panadol2",
+    "allergens": ["al1", "al2"],
+    "description": "Description of the medicine."
+  },
+  {
+    "id": 5,
+    "name": "Aspirin2",
+    "allergens": ["al3", "al2"],
+    "description": "Description of the medicine."
+  },
+  {
+    "id": 6,
+    "name": "Caffetin2",
+    "allergens": ["al1"],
+    "description": "Description of the medicine."
+  }
+]
