@@ -32,4 +32,13 @@ public class Room{
         File.WriteAllText("Data/rooms.json", convertedRooms);
     }
     
+    public static Room FindRoomById(int id, List<Room> allRooms){ //remove later
+        foreach(Room room in allRooms){
+            if(room.id == id){
+                return room;
+            }
+        }
+        return null;
+    }
+    
 }
