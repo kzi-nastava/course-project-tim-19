@@ -410,6 +410,30 @@ public class Doctor
                         patients.allPatients.Add(appointmentToDo.patient);
                         PatientsFactory.UpdatePatients(patients.allPatients);
 
+                        console.WriteLine("Enter id of the room where physical examination is done: ");
+                        int roomId=convert.ToInt32(console.ReadLine());
+
+                        RoomFactory rooms = new RoomFactory("Data/rooms.json");
+                        Room foundRoom=FindRoomById(roomId,rooms.allRooms);
+                        DynamicEquipmentFactory equipment = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
+
+
+                        List<DynamicEquipment> roomEquipment=FingAllEquipmentsByIds(foundRoom.equipmentIds,equipment.allEquipment);
+                        List<int> countedEquipment=CountTheEquipment(roomEquipment);
+                        console.WriteLine("Equipment in room with id ",roomId,":");
+                        console.WriteLine("SterileGauze Hanzaplast Injection Bandage SterileGloves PainKiller:", countedEquipment);
+
+                        console.WriteLine("Enter equipment that was used for physical examination:");
+                        equipmentType=console.ReadLine();
+                        
+                        console.WriteLine("Enter quantity:");
+                        equipmentQuantity=convert.ToInt32(console.ReadLine());
+
+                        UsedEquipment usedEquipment=new UsedEquipment(equipmentType,equipmentQuantity,roomId);
+                        UsedEquipmentFacotry equipment = new UsedEquipmentFacotry("Data/usedEquipment.json");
+                        equipment.allUsedEquipment.Add(usedEquipment);
+                        UsedEquipmentFacotry.UpdateUsedEquipment(equipment.allUsedEquipment);
+
                     }
                 }
             }
