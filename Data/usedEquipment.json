@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Hanzaplast",
+    "quantity": 2,
+    "roomId": 3
+  },
+  {
+    "name": "Injection",
+    "quantity": 1,
+    "roomId": 1
+  }
+]
