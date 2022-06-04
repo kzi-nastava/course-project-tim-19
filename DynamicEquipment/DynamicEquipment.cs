@@ -139,6 +139,77 @@ public class DynamicEquipment{
             }
         }
     }
+    
+    public static Dictionary<EquipmentType, int> FindLowEquipment(List<DynamicEquipment> allEquipment){
+        List<int> countedEquipment = CountTheEquipment(allEquipment);
+        Dictionary<EquipmentType, int> lowEquipment = new Dictionary<EquipmentType, int>();
+        if (countedEquipment[0] < 5){
+            lowEquipment.Add((EquipmentType)0, countedEquipment[0]);
+        } else if (countedEquipment[1] < 5){
+            lowEquipment.Add((EquipmentType)1, countedEquipment[1]);
+        } else if (countedEquipment[2] < 5){
+            lowEquipment.Add((EquipmentType)2, countedEquipment[2]);
+        } else if (countedEquipment[3] < 5){
+            lowEquipment.Add((EquipmentType)3, countedEquipment[3]);
+        } else if (countedEquipment[4] < 5){
+            lowEquipment.Add((EquipmentType)4, countedEquipment[4]);
+        } else if (countedEquipment[5] < 5){
+            lowEquipment.Add((EquipmentType)5, countedEquipment[5]);
+        }
+        return lowEquipment;
+    }
+
+    public static void RearrangeTheEquipment(List<Room> allRooms, List<DynamicEquipment> allEquipment){
+        List<Room> roomsWithMissingEquipment = Room.FindRoomsWithMissingEquipment(allRooms, allEquipment);
+        List<Room> roomsWithLowEquipment = Room.FindRoomsWithLowEquipment(allRooms, allEquipment);
+        Console.WriteLine("Do you want to rearrange equipment in rooms with missing equipment or rooms with equipment quantity less then 5?");
+        Console.WriteLine("1. missing equipment\n2. low equipment");
+        Console.WriteLine("Enter the option:");
+        var optionForRooms = Console.ReadLine();
+        if (optionForRooms == "1"){
+            Console.WriteLine("Rooms with missing equipment:");
+            foreach(Room room in roomsWithMissingEquipment){
+                Console.WriteLine(room);
+            }
+            Console.WriteLine("Enter id of the room to see what equipment is missing:");
+            var roomsId = Console.ReadLine();
+            Room chosenRoom = Room.FindById(Convert.ToInt32(roomsId), allRooms);
+            List<DynamicEquipment> equipmentInTheRoom = FindAllEquipmentByIds(chosenRoom.equipmentIds, allEquipment);
+            List<EquipmentType> missingEquipment = FindMissingEquipment(equipmentInTheRoom);
+            int i = 0;
+            foreach(EquipmentType equipment in missingEquipment){
+                Console.WriteLine(i+1 + ". type:" + equipment);
+                i++;
+            }
+            Console.WriteLine("Enter the option for equipment you want to add:");
+            var optionForEquipment = Console.ReadLine();
+            EquipmentType equipmentType = missingEquipment[Convert.ToInt32(optionForEquipment)-1];
+            Room.FindEquipmentTypeInRooms(equipmentType, allRooms, allEquipment);
+            Room.MoveEquipment(allEquipment, chosenRoom, allRooms);
+        } else if (optionForRooms == "2"){
+            Console.WriteLine("Rooms with equipment quantity less than 5:");
+            foreach(Room room in roomsWithLowEquipment){
+                Console.WriteLine(room);
+            }
+            Console.WriteLine("Enter id of the room to see what equipment has quantity lower than 5:");
+            var roomsId = Console.ReadLine();
+            Room chosenRoom = Room.FindById(Convert.ToInt32(roomsId), allRooms);
+            List<DynamicEquipment> equipmentInTheRoom = FindAllEquipmentByIds(chosenRoom.equipmentIds, allEquipment);
+            Dictionary<EquipmentType, int> lowEquipment = FindLowEquipment(equipmentInTheRoom);
+            int i = 0;
+            foreach (var equipment in lowEquipment){
+                Console.WriteLine(i+1 + ". type: " + equipment.Key + ", quantity: " + equipment.Value);
+                i++;
+            }
+            Console.WriteLine("Enter the option for equipment you want to add:");
+            var optionForEquipment = Console.ReadLine();
+            EquipmentType equipmentType = lowEquipment.ElementAt(Convert.ToInt32(optionForEquipment)-1).Key;
+            Room.FindEquipmentTypeInRooms(equipmentType, allRooms, allEquipment);
+            Room.MoveEquipment(allEquipment, chosenRoom, allRooms);
+        } else {
+            Console.WriteLine("You entered the wrong option!");
+        }
+    }
 
 
 }
