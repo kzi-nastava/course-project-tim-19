@@ -202,11 +202,12 @@ public class Doctor
         int option=0;
         DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
 
-        while (option!=3){
+        while (option!=4){
             Console.WriteLine("DOCTOR MENU");
             Console.WriteLine("1. CRUD for Doctor Appointments");
             Console.WriteLine("2. Physical examination");
-            Console.WriteLine("3. Log out");
+            Console.WriteLine("3. Medicine verification");
+            Console.WriteLine("4. Log out");
 
             Console.WriteLine("Enter an option: ");
             option=Convert.ToInt32(Console.ReadLine());
@@ -411,6 +412,56 @@ public class Doctor
 
                     }
                 }
+            }
+            if (option==3){//NOVO
+                console.WriteLine("Medicine verification");
+                MedicinesFactory medicines = new MedicinesFactory("Data/medicineRequests.json");
+                foreach (Medicine medicine in medicines.allMedicines){
+                    console.WriteLine(medicine);
+                }
+                console.WriteLine("Enter id of medicine you want to accept or reject: ");
+                int id= Convert.ToInt32(Console.ReadLine());
+                Medicine medicineToVerify=new Medicine();
+                foreach (Medicine medicine in medicines.allMedicines){
+                    if(id==medicine.id){
+                        medicines.allMedicines.Remove(medicine);
+                        medicineToVerify=medicine;
+                        break;
+                    }
+                }
+                
+                MedicinesFactory.UpdateMedicineRequests(medicines.allMedicines);
+                
+                console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
+                int option= Convert.ToInt32(Console.ReadLine());
+                while(option!=3){
+                    console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
+                    int option= Convert.ToInt32(Console.ReadLine());
+                    if (option==1){
+                        MedicinesFactory medicines = new MedicinesFactory("Data/medicine.json");
+                        medicines.allMedicines.Add(medicineToVerify);
+                        MedicinesFactory.UpdateMedicines(medicines.allMedicines);
+                        console.WriteLine("Medicine accepted successfully.");
+
+                    }else if(option ==2){
+                        console.WriteLine("Add comment: ");
+                        comment=console.ReadLine();
+
+                        RejectedMedicinesFactory rejectedMedicines = new RejectedMedicinesFactory("Data/rejectedMedicine.json");
+                        RejectedMedicine rejectedMedicine=new RejectedMedicine(medicineToVerify,comment);
+                        rejectedMedicines.allRejectedMedicines.Add(rejectedMedicine);
+                        MedicinesFactory.UpdateMedicines(medicines.allMedicines);
+                        
+
+                    }else if(option==3){
+                        pass;
+                    }else{
+                        console.WriteLine("Wrong character entered.");
+                    }
+                }
+
+
+
             }
         }        
     }}
