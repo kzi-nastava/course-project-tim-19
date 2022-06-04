@@ -1,0 +1,22 @@
+[
+    {
+        "id": 0,
+        "name": "Storage Room",
+        "equipmentIds": [1, 2]
+    },
+    {
+        "id": 1,
+        "name": "Room 1",
+        "equipmentIds": [0]
+    },
+    {
+        "id": 2,
+        "name": "Room 2",
+        "equipmentIds": [4]
+    },
+    {
+        "id": 3,
+        "name": "Room 3",
+        "equipmentIds": [3, 5]
+    }
+]
