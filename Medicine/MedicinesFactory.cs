@@ -13,4 +13,9 @@ public class MedicinesFactory{
         var convertedMedicines = JsonConvert.SerializeObject(allMedicines, Formatting.Indented);
         File.WriteAllText("Data/medicines.json", convertedMedicines);
     }
+
+    public static void UpdateMedicineRequests(List<Medicine> allMedicines){ //NOVO
+        var convertedMedicines = JsonConvert.SerializeObject(allMedicines, Formatting.Indented);
+        File.WriteAllText("Data/medicineRequests.json", convertedMedicines);
+    }
 }
