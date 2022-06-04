@@ -31,10 +31,12 @@ public class Secretary{
         ModificationRequestsFactory modificationRequestsFactory = new ModificationRequestsFactory("Data/modificationRequests.json");
         DoctorsFactory doctorsFactory = new DoctorsFactory("Data/doctors.json");
         ReferralsFactory referralsFectory = new ReferralsFactory("Data/referrals.json");
+        DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
+        RoomFactory roomFactory = new RoomFactory("Data/rooms.json");
         Console.WriteLine("Welcome, " + secretary.name + "!");
         Console.WriteLine("MENU FOR SECRETARY");
         while (true){
-            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Create urgent appointment\n5. Log out");
+            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Create urgent appointment\n5. Create request for missing equipment\n6. Rearrange dynamic equipment\n7. Log out");
             Console.WriteLine("Enter the option: ");
             var optionForMainMenu = Console.ReadLine();
             if (optionForMainMenu == "1"){
@@ -99,6 +101,10 @@ public class Secretary{
                 int field = Doctor.FindField();
                 DoctorAppointment.CreateUrgentAppointment(Convert.ToInt32(patientsId), (Field)field, patientsFactory.allPatients, doctorsFactory.allDoctors, doctorAppointmentsFactory.allDoctorAppointments);
             } else if (optionForMainMenu == "5"){
+                DynamicEquipment.OrderMissingEquipment(dynamicEquipmentFactory.allEquipment, roomFactory.allRooms);
+            } else if (optionForMainMenu == "6"){
+                DynamicEquipment.RearrangeTheEquipment(roomFactory.allRooms, dynamicEquipmentFactory.allEquipment);
+            } else if (optionForMainMenu == "7"){
                 break;
             } else {
                 Console.WriteLine("You entered wrong option! Please try again.");
