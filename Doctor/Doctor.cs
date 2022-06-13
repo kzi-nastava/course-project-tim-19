@@ -207,7 +207,8 @@ public class Doctor
             Console.WriteLine("1. CRUD for Doctor Appointments");
             Console.WriteLine("2. Physical examination");
             Console.WriteLine("3. Medicine verification");
-            Console.WriteLine("4. Log out");
+            Console.WriteLine("4. Day off request");
+            Console.WriteLine("5. Log out");
 
             Console.WriteLine("Enter an option: ");
             option=Convert.ToInt32(Console.ReadLine());
@@ -482,6 +483,37 @@ public class Doctor
                     }else{
                         console.WriteLine("Wrong character entered.");
                     }
+                }
+
+
+
+            }
+            if(option==4){
+                console.WriteLine("Day off request.");
+                Console.WriteLine("Enter your first day off: ");
+                string dateOfDayOff=console.ReadLine();
+                Console.WriteLine("Enter duration: ");
+                int duration=convert.ToInt32(console.ReadLine());
+                Console.WriteLine("Enter cause: ");
+                string cause=console.ReadLine();
+                Console.WriteLine("Is it urgent? Type yes or no: ");
+                string urgency=console.ReadLine();
+                if(urgency=="yes"){
+                    string state="accepted";
+                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,sttate,cause);
+                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
+                    dayOffRequests.allDayOffRequests.Add(dayOffRequest);
+                    DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
+
+                }else if(urgency=="no"){
+                    string state="on hold";
+                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,sttate,cause);
+                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
+                    dayOffRequests.allDayOffRequests.Add(dayOffRequest);
+                    DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
+
+                }else{
+                    console.WriteLine("Wrong input.");
                 }
 
 
