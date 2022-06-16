@@ -1,5 +1,22 @@
 ﻿class Program{
-
+    public static void findDoctor(string email,string password){
+    
+    DoctorsFactory doctorsFactory = new DoctorsFactory();
+    foreach (var doctor in doctorsFactory.GetAllDoctors()){
+                    if(doctor.email == email && doctor.password == password){
+                        Doctor.doctorMenu(doctor);
+                    }
+                }
+    }
+public static void findSecretary(string email,string password){
+    
+    SecretariesFactory secretariesFactory = new SecretariesFactory();
+    foreach (var secretary in secretariesFactory.GetAllSecretaries()){
+                    if(secretary.email == email && secretary.password == password){
+                        Secretary.Menu(secretary);
+                    }
+                }
+    }
     public static void login(){
         while(true){
             Console.WriteLine("LOGIN");
@@ -17,19 +34,9 @@
                     password = Convert.ToString(password);
                 }
 
-                DoctorsFactory doctorsFactory = new DoctorsFactory();
-                SecretariesFactory secretariesFactory = new SecretariesFactory();
-
-                foreach (var doctor in doctorsFactory.GetAllDoctors()){
-                    if(doctor.email == email && doctor.password == password){
-                        Doctor.doctorMenu(doctor);
-                    }
-                }
-                foreach (var secretary in secretariesFactory.GetAllSecretaries()){
-                    if(secretary.email == email && secretary.password == password){
-                        Secretary.Menu(secretary);
-                    }
-                }
+                findDoctor(email,password);
+                findSecretary(email,password);
+                
             } else if (answer == "no"){
                 break;
             } else {

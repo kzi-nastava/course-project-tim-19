@@ -83,44 +83,6 @@ public class Doctor
         return true;
     }
 
-    public void UpdateAppointment(Doctor doctor){
-        int option=0;
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
-        ReviewTimetable();
-        DoctorAppointment appointmentToChange=null;
-
-        Console.WriteLine("Enter id of the appointment you want to change: ");
-        int id=Convert.ToInt32(Console.ReadLine());
-        foreach(DoctorAppointment appointment in appointments.GetAllDoctorsAppointments()){
-            if (appointment.id==id){
-                appointmentToChange=appointment;
-            }
-
-        }
-        if (appointmentToChange!=null){
-            while(option!=3){
-                Console.WriteLine("What do you want to update? (Select number)");
-                Console.WriteLine("1. Date and time\n2. Emergency\n3. Exit");
-                option=Convert.ToInt32(Console.ReadLine());
-                if (option==1 ||option==2 ){
-                    if(option==1){
-                        ReviewTimetable();
-                    }
-                    appointments.GetAllDoctorsAppointments().Remove(appointmentToChange);
-                    appointmentToChange.UpdateDoctorAppointment(option);
-                    appointments.GetAllDoctorsAppointments().Add(appointmentToChange);
-                    appointments.UpdateData();
-
-                }
-                else if (option!=3){
-                    Console.WriteLine("Wrong option entered.");
-                }
-            }}
-        else{
-            Console.WriteLine("Wrong id endered.");
-        }
-    }
-
     public List<DateTime> CheckAvailability(DateTime dateAndTime){
         String start="2022-04-30T08:00:00";
         DateTime startDate=Convert.ToDateTime(start);
@@ -200,7 +162,8 @@ public class Doctor
                         
                     }
                     if (option==3){
-                        doctor.UpdateAppointment(doctor);
+                        //DoctorAppointmentsFactory.UpdateAppointment(doctor);
+                        continue;
                     }
                     if (option==4){
                         
@@ -318,7 +281,7 @@ public class Doctor
                         Referral referral=new Referral(referralsId,patientsId,doctorsId);
                         
                         
-                        ReferralsFactory referrals = new ReferralsFactory("Data/referrals.json");
+                        ReferralsFactory referrals = new ReferralsFactory();
                         referrals.GetAllReferrals().Add(referral);
                         referrals.UpdateData();
 
@@ -330,7 +293,7 @@ public class Doctor
 
                     }
                     
-                                        Console.WriteLine("Do you want to make a recipe?\n(type yes or no)"); //NOVO
+                    Console.WriteLine("Do you want to make a recipe?\n(type yes or no)"); //NOVO
                     answer=Console.ReadLine();
                     if (answer=="yes"){
                         Console.WriteLine("Enter id of recipe: "); //NOVO
@@ -398,7 +361,7 @@ public class Doctor
                     }
                 }
             }
-            if (option==3){//NOVO
+            if (option==3){
                 Console.WriteLine("Medicine verification");
                 MedicinesFactory medicines = new MedicinesFactory();
                 foreach (Medicine medicine in medicines.GetAllMedicines()){
@@ -480,5 +443,6 @@ public class Doctor
 
             }
         }        
-    }}
+        }
+    }
 }

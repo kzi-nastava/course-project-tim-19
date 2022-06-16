@@ -57,4 +57,42 @@ public class DoctorAppointment
 
     }
 
+    public static void UpdateAppointment(Doctor doctor){
+        int option=0;
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
+        doctor.ReviewTimetable();
+        DoctorAppointment appointmentToChange=null;
+
+        Console.WriteLine("Enter id of the appointment you want to change: ");
+        int id=Convert.ToInt32(Console.ReadLine());
+        foreach(DoctorAppointment appointment in appointments.GetAllDoctorsAppointments()){
+            if (appointment.id==id){
+                appointmentToChange=appointment;
+            }
+
+        }
+        if (appointmentToChange!=null){
+            while(option!=3){
+                Console.WriteLine("What do you want to update? (Select number)");
+                Console.WriteLine("1. Date and time\n2. Emergency\n3. Exit");
+                option=Convert.ToInt32(Console.ReadLine());
+                if (option==1 ||option==2 ){
+                    if(option==1){
+                        doctor.ReviewTimetable();
+                    }
+                    appointments.GetAllDoctorsAppointments().Remove(appointmentToChange);
+                    appointmentToChange.UpdateDoctorAppointment(option);
+                    appointments.GetAllDoctorsAppointments().Add(appointmentToChange);
+                    appointments.UpdateData();
+
+                }
+                else if (option!=3){
+                    Console.WriteLine("Wrong option entered.");
+                }
+            }}
+        else{
+            Console.WriteLine("Wrong id endered.");
+        }
+    }
+
 }

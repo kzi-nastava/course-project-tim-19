@@ -30,7 +30,7 @@ public class Secretary{
         DeletionRequestsFactory deletionRequestsFactory = new DeletionRequestsFactory();
         ModificationRequestsFactory modificationRequestsFactory = new ModificationRequestsFactory();
         DoctorsFactory doctorsFactory = new DoctorsFactory();
-        ReferralsFactory referralsFectory = new ReferralsFactory("Data/referrals.json");
+        ReferralsFactory referralsFactory = new ReferralsFactory();
         DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory();
         RoomFactory roomFactory = new RoomFactory();
         ReviewedDaysOffFactory reviewedDaysOffFactory = new ReviewedDaysOffFactory();
@@ -88,8 +88,8 @@ public class Secretary{
                     if (optionForReferralsMenu == "1"){
                         patientsFactory.ViewAllPatientsWithReferral();
                     } else if (optionForReferralsMenu == "2"){
-                        Referral referral = Referral.FindReferralByPatient(patientsFactory.GetAllPatients());
-                        doctorAppointmentsFactory.CreateViaReferral(referral.referralsId, referralsFectory.GetAllReferrals(), referral.patientsId, referral.doctorsId, patientsFactory.GetAllPatients(), doctorsFactory.GetAllDoctors(), doctorAppointmentsFactory.GetAllDoctorsAppointments());
+                        Referral referral = ReferralsFactory.FindReferralByPatient(patientsFactory.GetAllPatients());
+                        doctorAppointmentsFactory.CreateViaReferral(referral.referralsId, referralsFactory.GetAllReferrals(), referral.patientsId, referral.doctorsId, patientsFactory.GetAllPatients(), doctorsFactory.GetAllDoctors(), doctorAppointmentsFactory.GetAllDoctorsAppointments());
                     } else if (optionForReferralsMenu == "3"){
                         break;
                     } else {

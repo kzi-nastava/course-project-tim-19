@@ -86,6 +86,7 @@ public class DoctorAppointmentsFactory{
         DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory();
         DoctorsFactory doctorsFactory = new DoctorsFactory();
         PatientsFactory patientsFactory = new PatientsFactory();
+        ReferralsFactory referralsFactory = new ReferralsFactory();
         Console.WriteLine("Enter appointment's id: ");
         var appointmentsId = Console.ReadLine();
         Patient patient = patientsFactory.FindById(patientsId);
@@ -112,12 +113,12 @@ public class DoctorAppointmentsFactory{
             doctor.doctorAppointments.Add(Convert.ToInt32(appointmentsId));
             allDoctors.Add(doctor);
             doctorsFactory.UpdateData();
-            Referral referral = Referral.FindById(referralsId);
+            Referral referral = referralsFactory.FindById(referralsId);
             var foundReferral = allReferrals.SingleOrDefault(x => x.referralsId == referral.referralsId);
             if (foundReferral != null) {
                 allReferrals.Remove(foundReferral);
             }
-            Referral.UpdateData(allReferrals);
+            referralsFactory.UpdateData();
             Console.WriteLine("You successfully created a new appointment!");
         } else {
             Console.WriteLine("Doctor is not avaible at that time.");
@@ -139,7 +140,6 @@ public class DoctorAppointmentsFactory{
         }
         return dates.Contains(date);
     }
-    
     
     public void CreateUrgentAppointment(int patientsId, Field doctorsField, List<Patient> allPatients, List<Doctor> allDoctors){
         DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory();
