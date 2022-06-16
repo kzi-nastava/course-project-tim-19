@@ -1,12 +1,14 @@
 [
      {
-       "doctorId": 1,
-       "date":"23.08.2022.",
-       "duration": 3,
-       "state": "accepted",
-       "cause": "Cause of day off request."
+          "id": 1,
+          "doctorId": 1,
+          "date":"23.08.2022.",
+          "duration": 3,
+          "state": "accepted",
+          "cause": "Cause of day off request."
      },
      {
+          "id": 2,
           "doctorId": 2,
           "date":"03.07.2022.",
           "duration": 10,
