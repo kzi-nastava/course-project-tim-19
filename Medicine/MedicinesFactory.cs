@@ -1,21 +1,21 @@
 using Newtonsoft.Json;
 public class MedicinesFactory{
-    public List<Medicine> allMedicines { get; set; } = null!;
+    public static List<Medicine> allMedicines { get; set; } = null!;
 
-    public MedicinesFactory(string path){
-        var medicines = JsonConvert.DeserializeObject<List<Medicine>>(File.ReadAllText(path));
+    public MedicinesFactory(){
+        var medicines = JsonConvert.DeserializeObject<List<Medicine>>(File.ReadAllText("Data/medicines.json"));
         if (medicines != null){
             allMedicines = medicines;
         }
     }
 
-    public static void UpdateMedicines(List<Medicine> allMedicines){
-        var convertedMedicines = JsonConvert.SerializeObject(allMedicines, Formatting.Indented);
-        File.WriteAllText("Data/medicines.json", convertedMedicines);
-    }
-
-    public static void UpdateMedicineRequests(List<Medicine> allMedicines){ //NOVO
+    public void UpdateData(){
         var convertedMedicines = JsonConvert.SerializeObject(allMedicines, Formatting.Indented);
         File.WriteAllText("Data/medicineRequests.json", convertedMedicines);
     }
+
+    public List<Medicine> GetAllMedicines(){
+        return allMedicines;
+    }
+
 }

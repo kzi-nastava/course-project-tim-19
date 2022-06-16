@@ -1,11 +1,16 @@
 using Newtonsoft.Json;
 public class SecretariesFactory{
-    public List<Secretary> allSecretaries { get; set; } = null!;
+    public static List<Secretary> allSecretaries { get; set; } = null!;
 
-    public SecretariesFactory(string path){
-        var secretaries = JsonConvert.DeserializeObject<List<Secretary>>(File.ReadAllText(path));
+    public SecretariesFactory(){
+        var secretaries = JsonConvert.DeserializeObject<List<Secretary>>(File.ReadAllText("Data/secretaries.json"));
         if (secretaries != null){
             allSecretaries = secretaries;
         }
     }
+
+    public List<Secretary> GetAllSecretaries(){
+        return allSecretaries;
+    }
+
 }

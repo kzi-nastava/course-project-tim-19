@@ -3,35 +3,21 @@
     "id": 1,
     "doctorsId": 1,
     "patient": {
-      "id": 1,
-      "name": "Andrea Katzenberger",
-      "email": "andreak@gmail.com",
-      "password": "andrea123",
-      "medicalRecord": {
-        "height": 170,
-        "weight": 52.1,
-        "bloodType": "A+",
-        "previousIllnesses": [],
-        "allergens": []
+        "id": 1,
+        "name": "Andrea Katzenberger",
+        "email": "andreak@gmail.com",
+        "password": "andrea123",
+        "medicalRecord": {
+          "height": 170,
+          "weight": 52.1,
+          "bloodType": "A+",
+          "previousIllnesses": [],
+          "allergens": []
+        },
+        "blocked": 0,
+        "recipes": [1,2],
+        "referralsId": 1
       },
-      "blocked": 0,
-      "recipes": [
-        {
-          "id": 1,
-          "medicines": [
-            {
-              "name": "brufen",
-              "allergens": [],
-              "description": "opis brufena"
-            }
-          ],
-          "perDay": [
-            2
-          ],
-          "duration": 10
-        }
-      ]
-    },
     "dateTime": "2022-05-17T10:45:00",
     "emergency": 1
   },
@@ -51,22 +37,8 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [
-        {
-          "id": 1,
-          "medicines": [
-            {
-              "name": "brufen",
-              "allergens": [],
-              "description": "opis brufena"
-            }
-          ],
-          "perDay": [
-            2
-          ],
-          "duration": 10
-        }
-      ]
+      "recipes": [1,2],
+      "referralsId": 1
     },
     "dateTime": "2022-05-20T07:30:00",
     "emergency": 1
@@ -87,22 +59,8 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [
-        {
-          "id": 1,
-          "medicines": [
-            {
-              "name": "brufen",
-              "allergens": [],
-              "description": "opis brufena"
-            }
-          ],
-          "perDay": [
-            2
-          ],
-          "duration": 10
-        }
-      ]
+      "recipes": [1,2],
+      "referralsId": 1
     },
     "dateTime": "2022-05-24T12:00:00",
     "emergency": 1
@@ -123,22 +81,8 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [
-        {
-          "id": 1,
-          "medicines": [
-            {
-              "name": "brufen",
-              "allergens": [],
-              "description": "opis brufena"
-            }
-          ],
-          "perDay": [
-            2
-          ],
-          "duration": 10
-        }
-      ]
+      "recipes": [1,2],
+      "referralsId": 1
     },
     "dateTime": "2022-06-01T16:30:00",
     "emergency": 0
@@ -159,22 +103,8 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [
-        {
-          "id": 1,
-          "medicines": [
-            {
-              "name": "brufen",
-              "allergens": [],
-              "description": "opis brufena"
-            }
-          ],
-          "perDay": [
-            2
-          ],
-          "duration": 10
-        }
-      ]
+      "recipes": [1,2],
+      "referralsId": 1
     },
     "dateTime": "2022-05-01T15:00:00",
     "emergency": 1

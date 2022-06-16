@@ -25,16 +25,15 @@ public class Secretary{
         return null;
     }
     public static void Menu(Secretary secretary){
-        PatientsFactory patientsFactory = new PatientsFactory("Data/patients.json");
-        DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
-        DeletionRequestsFactory deletionRequestsFactory = new DeletionRequestsFactory("Data/deletionRequests.json");
-        ModificationRequestsFactory modificationRequestsFactory = new ModificationRequestsFactory("Data/modificationRequests.json");
-        DoctorsFactory doctorsFactory = new DoctorsFactory("Data/doctors.json");
+        PatientsFactory patientsFactory = new PatientsFactory();
+        DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory();
+        DeletionRequestsFactory deletionRequestsFactory = new DeletionRequestsFactory();
+        ModificationRequestsFactory modificationRequestsFactory = new ModificationRequestsFactory();
+        DoctorsFactory doctorsFactory = new DoctorsFactory();
         ReferralsFactory referralsFectory = new ReferralsFactory("Data/referrals.json");
-        DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
-        RoomFactory roomFactory = new RoomFactory("Data/rooms.json");
-        DayOffRequestsFactory dayOffRequestsFactory = new DayOffRequestsFactory("Data/dayOffRequests.json");
-        ReviewedDaysOffFactory reviewedDaysOffFactory = new ReviewedDaysOffFactory("Data/reviewedDaysOff.json");
+        DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory();
+        RoomFactory roomFactory = new RoomFactory();
+        ReviewedDaysOffFactory reviewedDaysOffFactory = new ReviewedDaysOffFactory();
         Console.WriteLine("Welcome, " + secretary.name + "!");
         Console.WriteLine("MENU FOR SECRETARY");
         while (true){
@@ -47,19 +46,19 @@ public class Secretary{
                     Console.WriteLine("Enter the option: ");
                     var optionForPatientAccountsMenu = Console.ReadLine();
                     if (optionForPatientAccountsMenu == "1"){
-                        Patient.CreateNewAccount(patientsFactory.allPatients);
+                        patientsFactory.CreateNewAccount();
                     } else if (optionForPatientAccountsMenu == "2"){
-                        Patient.ModifyAccount(patientsFactory.allPatients);
+                        patientsFactory.ModifyAccount();
                     } else if (optionForPatientAccountsMenu == "3"){
-                        Patient.DeleteAccount(patientsFactory.allPatients);
+                        patientsFactory.DeleteAccount();
                     } else if (optionForPatientAccountsMenu == "4"){
-                        Patient.ViewAllPatients(patientsFactory.allPatients);
+                        patientsFactory.ViewAllPatients();
                     } else if (optionForPatientAccountsMenu == "5"){
-                        Patient.BlockAccount(patientsFactory.allPatients);
+                        patientsFactory.BlockAccount();
                     } else if (optionForPatientAccountsMenu == "6"){
-                        Patient.UnblockAccount(patientsFactory.allPatients);
+                        patientsFactory.UnblockAccount();
                     } else if (optionForPatientAccountsMenu == "7"){
-                        Patient.ViewAllBlockedPatients(patientsFactory.allPatients);
+                        patientsFactory.ViewAllBlockedPatients();
                     } else if (optionForPatientAccountsMenu == "8"){
                         break;
                     } else {
@@ -72,9 +71,9 @@ public class Secretary{
                     Console.WriteLine("Enter the option:");
                     var optionForRequestsMenu = Console.ReadLine();
                     if (optionForRequestsMenu == "1"){
-                        ModificationRequest.ManageRequest(modificationRequestsFactory.allModificationRequests);
+                        modificationRequestsFactory.ManageRequest();
                     } else if (optionForRequestsMenu == "2"){
-                        DeletionRequest.ManageDeletionRequests(deletionRequestsFactory.allDeletionRequests);
+                       deletionRequestsFactory.ManageDeletionRequests();
                     } else if (optionForRequestsMenu == "3"){
                         break;
                     } else {
@@ -87,10 +86,10 @@ public class Secretary{
                     Console.WriteLine("Enter the option:");
                     var optionForReferralsMenu = Console.ReadLine();
                     if (optionForReferralsMenu == "1"){
-                        Patient.ViewAllPatientsWithReferral(patientsFactory.allPatients);
+                        patientsFactory.ViewAllPatientsWithReferral();
                     } else if (optionForReferralsMenu == "2"){
-                        Referral referral = Referral.FindReferralByPatient(patientsFactory.allPatients);
-                        DoctorAppointment.CreateViaReferral(referral.referralsId, referralsFectory.allRefferals, referral.patientsId, referral.doctorsId, patientsFactory.allPatients, doctorsFactory.allDoctors, doctorAppointmentsFactory.allDoctorAppointments);
+                        Referral referral = Referral.FindReferralByPatient(patientsFactory.GetAllPatients());
+                        doctorAppointmentsFactory.CreateViaReferral(referral.referralsId, referralsFectory.GetAllReferrals(), referral.patientsId, referral.doctorsId, patientsFactory.GetAllPatients(), doctorsFactory.GetAllDoctors(), doctorAppointmentsFactory.GetAllDoctorsAppointments());
                     } else if (optionForReferralsMenu == "3"){
                         break;
                     } else {
@@ -101,13 +100,13 @@ public class Secretary{
                 Console.WriteLine("Enter patient's id: ");
                 var patientsId = Console.ReadLine();
                 int field = Doctor.FindField();
-                DoctorAppointment.CreateUrgentAppointment(Convert.ToInt32(patientsId), (Field)field, patientsFactory.allPatients, doctorsFactory.allDoctors, doctorAppointmentsFactory.allDoctorAppointments);
+                doctorAppointmentsFactory.CreateUrgentAppointment(Convert.ToInt32(patientsId), (Field)field, patientsFactory.GetAllPatients(), doctorsFactory.GetAllDoctors());
             } else if (optionForMainMenu == "5"){
-                DynamicEquipment.OrderMissingEquipment(dynamicEquipmentFactory.allEquipment, roomFactory.allRooms);
+                dynamicEquipmentFactory.OrderMissingEquipment(roomFactory.GetAllRooms());
             } else if (optionForMainMenu == "6"){
-                DynamicEquipment.RearrangeTheEquipment(roomFactory.allRooms, dynamicEquipmentFactory.allEquipment);
+                DynamicEquipment.RearrangeTheEquipment(roomFactory.GetAllRooms(), dynamicEquipmentFactory.GetAllDynamicEquipment());
             } else if (optionForMainMenu == "7"){
-                ReviewedDaysOffFactory.ReviewDayOffRequests();
+                reviewedDaysOffFactory.ReviewDayOffRequests();
             } else if (optionForMainMenu == "8"){
                 break;
             } else {

@@ -17,15 +17,15 @@
                     password = Convert.ToString(password);
                 }
 
-                DoctorsFactory doctorsFactory = new DoctorsFactory("Data/doctors.json");
-                SecretariesFactory secretariesFactory = new SecretariesFactory("Data/secretaries.json");
+                DoctorsFactory doctorsFactory = new DoctorsFactory();
+                SecretariesFactory secretariesFactory = new SecretariesFactory();
 
-                foreach (var doctor in doctorsFactory.allDoctors){
+                foreach (var doctor in doctorsFactory.GetAllDoctors()){
                     if(doctor.email == email && doctor.password == password){
                         Doctor.doctorMenu(doctor);
                     }
                 }
-                foreach (var secretary in secretariesFactory.allSecretaries){
+                foreach (var secretary in secretariesFactory.GetAllSecretaries()){
                     if(secretary.email == email && secretary.password == password){
                         Secretary.Menu(secretary);
                     }

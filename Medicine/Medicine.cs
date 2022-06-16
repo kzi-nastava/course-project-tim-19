@@ -4,14 +4,12 @@ public class Medicine
     public string name{ get; set; }
     public List<string> allergens { get; set; }
     public string description { get; set; }
-    //public int quantity { get; set; }
 
     public Medicine(int id,string name, List<string> allergens, string description){
         this.id=id;
         this.name = name;
         this.allergens = allergens;
         this.description = description;
-        //quantity = quantity;
     }
 
     public override string ToString()

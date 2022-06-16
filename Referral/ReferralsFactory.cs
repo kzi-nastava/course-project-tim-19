@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 public class ReferralsFactory{
-    public List<Referral> allRefferals { get; set; } = null!;
+    public static List<Referral> allRefferals { get; set; } = null!;
 
     public ReferralsFactory(string path){
         var referrals = JsonConvert.DeserializeObject<List<Referral>>(File.ReadAllText(path));
@@ -9,8 +9,12 @@ public class ReferralsFactory{
         }
     }
 
-    public static void UpdateReferrals(List<Referral> allRefferals){
+    public void UpdateData(){
         var convertedReferrals = JsonConvert.SerializeObject(allRefferals, Formatting.Indented);
         File.WriteAllText("Data/referrals.json", convertedReferrals);
+    }
+
+    public List<Referral> GetAllReferrals(){
+        return allRefferals;
     }
 }

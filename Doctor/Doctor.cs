@@ -35,24 +35,6 @@ public class Doctor
         }
         return "Doctor [id: " + id + ", name: " + name + ", email: " + email + ", password: " + password + ", field: " + field + ", doctor appointment: [" + appointments + "]]";
     }
-    
-    public static Doctor FindById(int id, List<Doctor> allDoctors){
-        foreach (Doctor doctor in allDoctors){
-            if (doctor.id == id){
-                return doctor;
-            }
-        }
-        return null;
-    }
-
-    public static Doctor FindByField(Field field, List<Doctor> allDoctors){
-        foreach (Doctor doctor in allDoctors){
-            if (doctor.field == field){
-                return doctor;
-            }
-        }
-        return null;
-    }
 
     public static int FindField(){
         Console.WriteLine("Avaible fields: ");
@@ -64,17 +46,12 @@ public class Doctor
         }
         return -1;
     }
-
-    public static void UpdateData(List<Doctor> allDoctors){
-        var convertedDoctors = JsonConvert.SerializeObject(allDoctors, Formatting.Indented);
-        File.WriteAllText("Data/doctors.json", convertedDoctors);
-    }
     
     public void ReviewTimetable(){
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
         foreach (int appointmentId in this.doctorAppointments){
             
-            foreach (DoctorAppointment appointment in appointments.allDoctorAppointments){
+            foreach (DoctorAppointment appointment in appointments.GetAllDoctorsAppointments()){
                 if (appointment.id==appointmentId){
                     Console.WriteLine(appointment);
                 }
@@ -83,37 +60,16 @@ public class Doctor
         
     }
 
-    public static Doctor FindDoctorById(int id){
-        
-        DoctorsFactory doctors = new DoctorsFactory("Data/doctors.json");
-        foreach (Doctor doctor in doctors.allDoctors){
-            if (doctor.id == id){
-                return doctor;
-            }
-        }
-        return null;
-    }
-
-    public DoctorAppointment FindDoctorsAppointmentById(int id){
-        
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
-        foreach (DoctorAppointment doctorsAppointment in appointments.allDoctorAppointments){
-            if (doctorsAppointment.id == id){
-                return doctorsAppointment;
-            }
-        }
-        return null;
-    }
-
     public void DeleteAppointment(){
+        DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory();
         Console.WriteLine("Enter appointment's id you want to delete: ");
         int id=Convert.ToInt32(Console.ReadLine());
-        DoctorAppointment appointmentToDelete=DoctorAppointment.FindById(id);
+        DoctorAppointment appointmentToDelete=doctorAppointmentsFactory.FindById(id);
         Console.WriteLine(appointmentToDelete);
 
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
-        appointments.allDoctorAppointments.Remove(appointmentToDelete);
-        DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
+        appointments.GetAllDoctorsAppointments().Remove(appointmentToDelete);
+        appointments.UpdateData();
 
         this.doctorAppointments.Remove(id);
     }
@@ -129,13 +85,13 @@ public class Doctor
 
     public void UpdateAppointment(Doctor doctor){
         int option=0;
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
         ReviewTimetable();
         DoctorAppointment appointmentToChange=null;
 
         Console.WriteLine("Enter id of the appointment you want to change: ");
         int id=Convert.ToInt32(Console.ReadLine());
-        foreach(DoctorAppointment appointment in appointments.allDoctorAppointments){
+        foreach(DoctorAppointment appointment in appointments.GetAllDoctorsAppointments()){
             if (appointment.id==id){
                 appointmentToChange=appointment;
             }
@@ -150,10 +106,10 @@ public class Doctor
                     if(option==1){
                         ReviewTimetable();
                     }
-                    appointments.allDoctorAppointments.Remove(appointmentToChange);
+                    appointments.GetAllDoctorsAppointments().Remove(appointmentToChange);
                     appointmentToChange.UpdateDoctorAppointment(option);
-                    appointments.allDoctorAppointments.Add(appointmentToChange);
-                    DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
+                    appointments.GetAllDoctorsAppointments().Add(appointmentToChange);
+                    appointments.UpdateData();
 
                 }
                 else if (option!=3){
@@ -172,14 +128,16 @@ public class Doctor
         List<DateTime> available=new List<DateTime>();
         List<DoctorAppointment> appointments=new List<DoctorAppointment>();
 
+        DoctorAppointmentsFactory doctorAppointmentsFactory = new DoctorAppointmentsFactory();
+
         foreach(int appointment in this.doctorAppointments){
-            appointments.Add(FindDoctorsAppointmentById(appointment));
+            appointments.Add(doctorAppointmentsFactory.FindById(appointment));
         }
 
         for (var i=0;i<=2;i++){
             int unavailableAppointment=0;
             while(startDate.Hour!=20){
-                DoctorAppointment temp= FindDoctorsAppointmentById(unavailableAppointment);
+                DoctorAppointment temp= doctorAppointmentsFactory.FindById(unavailableAppointment);
                 if(Convert.ToDateTime(startDate)!=available[0]){
                     available.Add(startDate);
                     Console.WriteLine(Convert.ToString(startDate.Hour),Convert.ToString(startDate.Minute));
@@ -200,7 +158,9 @@ public class Doctor
         Console.WriteLine("\n");
 
         int option=0;
-        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
+        DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory();
+        DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory();
+        RoomFactory roomFactory = new RoomFactory();
 
         while (option!=4){
             Console.WriteLine("DOCTOR MENU");
@@ -224,15 +184,15 @@ public class Doctor
                     Console.WriteLine("Enter an option: ");
                     option=Convert.ToInt32(Console.ReadLine());
                     if (option==1){
-                        DoctorAppointment.CreateAppointment(doctor);
+                        appointments.CreateAppointment(doctor);
                         
                     }
                     if (option==2){
                         doctor.ReviewTimetable();
                         Console.WriteLine("Do you want to see someone's medical record? Enter id.");
                         var id=Console.ReadLine();
-                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                        foreach(Patient patient in patients.allPatients){
+                        PatientsFactory patients = new PatientsFactory();
+                        foreach(Patient patient in patients.GetAllPatients()){
                             if (patient.id==Convert.ToInt32(id)){
                                 Console.WriteLine(patient);
                             }
@@ -244,13 +204,13 @@ public class Doctor
                     }
                     if (option==4){
                         
-                        DoctorsFactory doctors = new DoctorsFactory("Data/doctors.json");
-                        doctors.allDoctors.Remove(doctor);
+                        DoctorsFactory doctorsFactory = new DoctorsFactory();
+                        doctorsFactory.GetAllDoctors().Remove(doctor);
                         
                         doctor.DeleteAppointment();
 
-                        doctors.allDoctors.Add(doctor);
-                        DoctorsFactory.UpdateDoctors(doctors.allDoctors);
+                        doctorsFactory.GetAllDoctors().Add(doctor);
+                        doctorsFactory.UpdateData();
                     }
                         
                     }
@@ -263,14 +223,14 @@ public class Doctor
 
         
                 DoctorAppointment appointmentToDo=null;
-                foreach(DoctorAppointment appointment in appointments.allDoctorAppointments){
+                foreach(DoctorAppointment appointment in appointments.GetAllDoctorsAppointments()){
                     if (appointment.id==id){
                         appointmentToDo=appointment;
                         
                     }
                 if(appointmentToDo!=null){
                     Console.WriteLine(appointmentToDo.patient);
-                    List<DoctorAppointment> permanentAppointments=appointments.allDoctorAppointments;
+                    List<DoctorAppointment> permanentAppointments=appointments.GetAllDoctorsAppointments();
                     int number=0;
                     while (number!=5){
                         Console.WriteLine("What do you want to update? Enter number.");
@@ -280,40 +240,40 @@ public class Doctor
                             Console.WriteLine("Enter new patient's height: ");
 
                             permanentAppointments.Remove(appointmentToDo);
-                            PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                            patients.allPatients.Remove(appointmentToDo.patient);
+                            PatientsFactory patients = new PatientsFactory();
+                            patients.GetAllPatients().Remove(appointmentToDo.patient);
                             
                             int newHeight=Convert.ToInt32(Console.ReadLine());
                             appointmentToDo.patient.medicalRecord.height=newHeight;
 
-                            patients.allPatients.Add(appointmentToDo.patient);
+                            patients.GetAllPatients().Add(appointmentToDo.patient);
                             permanentAppointments.Add(appointmentToDo);
-                            PatientsFactory.UpdatePatients(patients.allPatients);
-                            DoctorAppointmentsFactory.UpdateDoctorAppointments(permanentAppointments);
+                            patients.UpdateData();
+                            appointments.UpdateData();
 
 
                         }
                         else if(number==2){
 
                             permanentAppointments.Remove(appointmentToDo);
-                            PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                            patients.allPatients.Remove(appointmentToDo.patient);
+                            PatientsFactory patients = new PatientsFactory();
+                            patients.GetAllPatients().Remove(appointmentToDo.patient);
                             
                              Console.WriteLine("Enter new patient's weight: ");
                             int newWeight=Convert.ToInt32(Console.ReadLine());
                             appointmentToDo.patient.medicalRecord.weight=newWeight;
 
-                            patients.allPatients.Add(appointmentToDo.patient);
+                            patients.GetAllPatients().Add(appointmentToDo.patient);
                             permanentAppointments.Add(appointmentToDo);
-                            PatientsFactory.UpdatePatients(patients.allPatients);
-                            DoctorAppointmentsFactory.UpdateDoctorAppointments(permanentAppointments);
+                            patients.UpdateData();
+                            appointments.UpdateData();
 
                         }
                         else if(number==3){
 
                             permanentAppointments.Remove(appointmentToDo);
-                            PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                            patients.allPatients.Remove(appointmentToDo.patient);
+                            PatientsFactory patients = new PatientsFactory();
+                            patients.GetAllPatients().Remove(appointmentToDo.patient);
                             
                             Console.WriteLine("Enter patient's previous illnesses: ");
                             string newIllnesses=Console.ReadLine();
@@ -322,16 +282,16 @@ public class Doctor
 
                             appointmentToDo.patient.medicalRecord.previousIllnesses=illnesses;
 
-                            patients.allPatients.Add(appointmentToDo.patient);
+                            patients.GetAllPatients().Add(appointmentToDo.patient);
                             permanentAppointments.Add(appointmentToDo);
-                            PatientsFactory.UpdatePatients(patients.allPatients);
-                            DoctorAppointmentsFactory.UpdateDoctorAppointments(permanentAppointments);
+                            patients.UpdateData();
+                            appointments.UpdateData();
                         }
                         else if(number==4){
                                                        
                             permanentAppointments.Remove(appointmentToDo);
-                            PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                            patients.allPatients.Remove(appointmentToDo.patient);
+                            PatientsFactory patients = new PatientsFactory();
+                            patients.GetAllPatients().Remove(appointmentToDo.patient);
                             
                             Console.WriteLine("Enter new patient's allergens: ");
                             string newAlergens=Console.ReadLine();
@@ -339,10 +299,10 @@ public class Doctor
                             alergens.Add(newAlergens);
                             appointmentToDo.patient.medicalRecord.allergens=alergens;
 
-                            patients.allPatients.Add(appointmentToDo.patient);
+                            patients.GetAllPatients().Add(appointmentToDo.patient);
                             permanentAppointments.Add(appointmentToDo);
-                            PatientsFactory.UpdatePatients(patients.allPatients);
-                            DoctorAppointmentsFactory.UpdateDoctorAppointments(permanentAppointments);
+                            patients.UpdateData();
+                            appointments.UpdateData();
                         }
 
                     }
@@ -359,14 +319,14 @@ public class Doctor
                         
                         
                         ReferralsFactory referrals = new ReferralsFactory("Data/referrals.json");
-                        referrals.allRefferals.Add(referral);
-                        ReferralsFactory.UpdateReferrals(referrals.allRefferals);
+                        referrals.GetAllReferrals().Add(referral);
+                        referrals.UpdateData();
 
-                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                        patients.allPatients.Remove(appointmentToDo.patient);
+                        PatientsFactory patients = new PatientsFactory();
+                        patients.GetAllPatients().Remove(appointmentToDo.patient);
                         appointmentToDo.patient.referralsId=referralsId;
-                        patients.allPatients.Add(appointmentToDo.patient);
-                        PatientsFactory.UpdatePatients(patients.allPatients);
+                        patients.GetAllPatients().Add(appointmentToDo.patient);
+                        patients.UpdateData();
 
                     }
                     
@@ -403,24 +363,24 @@ public class Doctor
                         Recipe recipe= new Recipe(recipeId,medicineIds,timesPerDay,days);
                         
                         RecipesFactory recipes = new RecipesFactory("Data/recipes.json");
-                        recipes.allRecipes.Add(recipe);
+                        recipes.GetAllRecipes().Add(recipe);
                         
-                        PatientsFactory patients = new PatientsFactory("Data/patients.json");
-                        patients.allPatients.Remove(appointmentToDo.patient);
+                        PatientsFactory patients = new PatientsFactory();
+                        patients.GetAllPatients().Remove(appointmentToDo.patient);
                         appointmentToDo.patient.recipes.Add(recipeId);
-                        patients.allPatients.Add(appointmentToDo.patient);
-                        PatientsFactory.UpdatePatients(patients.allPatients);
+                        patients.GetAllPatients().Add(appointmentToDo.patient);
+                        patients.UpdateData();
 
                         Console.WriteLine("Enter id of the room where physical examination is done: ");
                         int roomId=Convert.ToInt32(Console.ReadLine());
 
-                        RoomFactory rooms = new RoomFactory("Data/rooms.json");
-                        Room foundRoom=Room.FindRoomById(roomId,rooms.allRooms);
-                        DynamicEquipmentFactory equipment = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
+                        RoomFactory rooms = new RoomFactory();
+                        Room foundRoom=roomFactory.FindById(roomId);
+                        DynamicEquipmentFactory equipment = new DynamicEquipmentFactory();
 
 
-                        List<DynamicEquipment> roomEquipment=DynamicEquipment.FindAllEquipmentByIds(foundRoom.equipmentIds,equipment.allEquipment);
-                        List<int> countedEquipment=DynamicEquipment.CountTheEquipment(roomEquipment);
+                        List<DynamicEquipment> roomEquipment=dynamicEquipmentFactory.FindAllEquipmentByIds(foundRoom.equipmentIds);
+                        List<int> countedEquipment=dynamicEquipmentFactory.CountTheEquipment();
                         Console.WriteLine("Equipment in room with id ",roomId,":");
                         Console.WriteLine("SterileGauze Hanzaplast Injection Bandage SterileGloves PainKiller:", countedEquipment);
 
@@ -440,22 +400,22 @@ public class Doctor
             }
             if (option==3){//NOVO
                 Console.WriteLine("Medicine verification");
-                MedicinesFactory medicines = new MedicinesFactory("Data/medicineRequests.json");
-                foreach (Medicine medicine in medicines.allMedicines){
+                MedicinesFactory medicines = new MedicinesFactory();
+                foreach (Medicine medicine in medicines.GetAllMedicines()){
                     Console.WriteLine(medicine);
                 }
                 Console.WriteLine("Enter id of medicine you want to accept or reject: ");
                 //int id= Convert.ToInt32(Console.ReadLine());
                 //Medicine medicineToVerify=new Medicine();
-                foreach (Medicine medicine in medicines.allMedicines){
+                foreach (Medicine medicine in medicines.GetAllMedicines()){
                     if(id==medicine.id){
-                        medicines.allMedicines.Remove(medicine);
+                        medicines.GetAllMedicines().Remove(medicine);
                         //medicineToVerify=medicine;
                         break;
                     }
                 }
                 
-                MedicinesFactory.UpdateMedicineRequests(medicines.allMedicines);
+                medicines.UpdateData();
                 
                 Console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
                 int entry= Convert.ToInt32(Console.ReadLine());
@@ -465,17 +425,17 @@ public class Doctor
                     if (newEntry==1){
                         //MedicinesFactory medicines = new MedicinesFactory("Data/medicine.json");
                         //medicines.allMedicines.Add(medicineToVerify);
-                        MedicinesFactory.UpdateMedicines(medicines.allMedicines);
+                        medicines.UpdateData();
                         Console.WriteLine("Medicine accepted successfully.");
 
                     }else if(newEntry ==2){
                         Console.WriteLine("Add comment: ");
                         var comment=Console.ReadLine();
 
-                        RejectedMedicinesFactory rejectedMedicines = new RejectedMedicinesFactory("Data/rejectedMedicine.json");
+                        RejectedMedicinesFactory rejectedMedicines = new RejectedMedicinesFactory();
                         //RejectedMedicine rejectedMedicine=new RejectedMedicine(medicineToVerify,comment);
                         //rejectedMedicines.allRejectedMedicines.Add(rejectedMedicine);
-                        MedicinesFactory.UpdateMedicines(medicines.allMedicines);
+                        medicines.UpdateData();
                         
 
                     }else if(newEntry==3){
@@ -500,15 +460,15 @@ public class Doctor
                 string urgency=Console.ReadLine();
                 if(urgency=="yes"){
                     string state="accepted";
-                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequest.FindNextIdForRequest), doctor.id,dateOfDayOff,duration,state,cause);
-                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
+                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequestsFactory.FindNextId), doctor.id,dateOfDayOff,duration,state,cause);
+                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory();
                     //dayOffRequests.allDayOffRequests.Add(dayOffRequest);
                     //DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 
                 }else if(urgency=="no"){
                     string state="on hold";
-                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequest.FindNextIdForRequest), doctor.id,dateOfDayOff,duration,state,cause);
-                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
+                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequestsFactory.FindNextId), doctor.id,dateOfDayOff,duration,state,cause);
+                    DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory();
                     //dayOffRequests.allDayOffRequests.Add(dayOffRequest);
                     //DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 

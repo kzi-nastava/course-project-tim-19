@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 public class RecipesFactory{
-    public List<Recipe> allRecipes { get; set; } = null!;
+    public static List<Recipe> allRecipes { get; set; } = null!;
 
     public RecipesFactory(string path){
         var recipes = JsonConvert.DeserializeObject<List<Recipe>>(File.ReadAllText(path));
@@ -9,8 +9,12 @@ public class RecipesFactory{
         }
     }
 
-    public static void UpdateRecipes(List<Recipe> allRecipes){
+    public void UpdateData(){
         var convertedRecipes = JsonConvert.SerializeObject(allRecipes, Formatting.Indented);
         File.WriteAllText("Data/recipes.json", convertedRecipes);
+    }
+
+    public List<Recipe> GetAllRecipes(){
+        return allRecipes;
     }
 }

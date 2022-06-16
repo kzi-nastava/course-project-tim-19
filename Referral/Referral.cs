@@ -18,7 +18,7 @@ public class Referral
 
     public static Referral FindById(int id){
         ReferralsFactory referrals = new ReferralsFactory("Data/referrals.json");
-        foreach (Referral referral in referrals.allRefferals){
+        foreach (Referral referral in referrals.GetAllReferrals()){
             if (referral.referralsId == id){
                 return referral;
             }
@@ -27,9 +27,10 @@ public class Referral
     }
 
     public static Referral FindReferralByPatient(List<Patient> allPatients){
+        PatientsFactory patientsFactory = new PatientsFactory();
         Console.WriteLine("Enter patient's id: ");
         var patientsId = Console.ReadLine();
-        Patient patient = Patient.FindById(Convert.ToInt32(patientsId), allPatients);
+        Patient patient = patientsFactory.FindById(Convert.ToInt32(patientsId));
         Referral referral = Referral.FindById(patient.referralsId);
         Console.WriteLine(referral);
         return referral;
