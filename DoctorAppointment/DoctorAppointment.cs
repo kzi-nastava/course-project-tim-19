@@ -246,13 +246,13 @@ public static void CreateUrgentAppointment(int patientsId, Field doctorsField, L
                 var emergency= Convert.ToInt32(Console.ReadLine());
 
                 if(emergency==0 ||emergency==1){
-                    DoctorAppointment newAppointment=new DoctorAppointment(Convert.ToInt32(id), patient,  Convert.ToDateTime(dateTime), (Emergency)emergency);
+                    //DoctorAppointment newAppointment=new DoctorAppointment(Convert.ToInt32(id), patient,  Convert.ToDateTime(dateTime), (Emergency)emergency);
                 
                     DoctorsFactory doctors = new DoctorsFactory("Data/doctors.json");
                     doctors.allDoctors.Remove(doctor);
                     DoctorAppointmentsFactory appointments = new DoctorAppointmentsFactory("Data/doctorAppointments.json");
-                    appointments.allDoctorAppointments.Add(newAppointment);
-                    DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
+                    //appointments.allDoctorAppointments.Add(newAppointment);
+                    //DoctorAppointmentsFactory.UpdateDoctorAppointments(appointments.allDoctorAppointments);
 
                     doctor.doctorAppointments.Add(Convert.ToInt32(id));
                     doctors.allDoctors.Add(doctor);

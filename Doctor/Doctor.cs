@@ -422,31 +422,31 @@ public class Doctor
                         List<DynamicEquipment> roomEquipment=FingAllEquipmentsByIds(foundRoom.equipmentIds,equipment.allEquipment);
                         List<int> countedEquipment=CountTheEquipment(roomEquipment);
                         console.WriteLine("Equipment in room with id ",roomId,":");
-                        console.WriteLine("SterileGauze Hanzaplast Injection Bandage SterileGloves PainKiller:", countedEquipment);
+                        Console.WriteLine("SterileGauze Hanzaplast Injection Bandage SterileGloves PainKiller:", countedEquipment);
 
-                        console.WriteLine("Enter equipment that was used for physical examination:");
-                        equipmentType=console.ReadLine();
+                        Console.WriteLine("Enter equipment that was used for physical examination:");
+                        var equipmentType=Console.ReadLine();
                         
-                        console.WriteLine("Enter quantity:");
-                        equipmentQuantity=convert.ToInt32(console.ReadLine());
+                        Console.WriteLine("Enter quantity:");
+                        int equipmentQuantity=Convert.ToInt32(Console.ReadLine());
 
-                        UsedEquipment usedEquipment=new UsedEquipment(equipmentType,equipmentQuantity,roomId);
-                        UsedEquipmentFacotry equipment = new UsedEquipmentFacotry("Data/usedEquipment.json");
-                        equipment.allUsedEquipment.Add(usedEquipment);
-                        UsedEquipmentFacotry.UpdateUsedEquipment(equipment.allUsedEquipment);
+                       //UsedEquipment usedEquipment=new UsedEquipment(equipmentType,equipmentQuantity,roomId);
+                        //UsedEquipmentFacotry equipment = new UsedEquipmentFacotry("Data/usedEquipment.json");
+                        //equipment.allUsedEquipment.Add(usedEquipment);
+                        //UsedEquipmentFacotry.UpdateUsedEquipment(equipment.allUsedEquipment);
 
                     }
                 }
             }
             if (option==3){//NOVO
-                console.WriteLine("Medicine verification");
+                Console.WriteLine("Medicine verification");
                 MedicinesFactory medicines = new MedicinesFactory("Data/medicineRequests.json");
                 foreach (Medicine medicine in medicines.allMedicines){
-                    console.WriteLine(medicine);
+                    Console.WriteLine(medicine);
                 }
-                console.WriteLine("Enter id of medicine you want to accept or reject: ");
-                int id= Convert.ToInt32(Console.ReadLine());
-                Medicine medicineToVerify=new Medicine();
+                Console.WriteLine("Enter id of medicine you want to accept or reject: ");
+                //int id= Convert.ToInt32(Console.ReadLine());
+                //Medicine medicineToVerify=new Medicine();
                 foreach (Medicine medicine in medicines.allMedicines){
                     if(id==medicine.id){
                         medicines.allMedicines.Remove(medicine);
@@ -457,20 +457,20 @@ public class Doctor
                 
                 MedicinesFactory.UpdateMedicineRequests(medicines.allMedicines);
                 
-                console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
+                Console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
                 int option= Convert.ToInt32(Console.ReadLine());
                 while(option!=3){
-                    console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
+                    Console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
                     int option= Convert.ToInt32(Console.ReadLine());
                     if (option==1){
-                        MedicinesFactory medicines = new MedicinesFactory("Data/medicine.json");
-                        medicines.allMedicines.Add(medicineToVerify);
+                        //MedicinesFactory medicines = new MedicinesFactory("Data/medicine.json");
+                        //medicines.allMedicines.Add(medicineToVerify);
                         MedicinesFactory.UpdateMedicines(medicines.allMedicines);
-                        console.WriteLine("Medicine accepted successfully.");
+                        Console.WriteLine("Medicine accepted successfully.");
 
                     }else if(option ==2){
-                        console.WriteLine("Add comment: ");
-                        comment=console.ReadLine();
+                        Console.WriteLine("Add comment: ");
+                        var comment=Console.ReadLine();
 
                         RejectedMedicinesFactory rejectedMedicines = new RejectedMedicinesFactory("Data/rejectedMedicine.json");
                         RejectedMedicine rejectedMedicine=new RejectedMedicine(medicineToVerify,comment);
@@ -479,9 +479,9 @@ public class Doctor
                         
 
                     }else if(option==3){
-                        pass;
+                        break;
                     }else{
-                        console.WriteLine("Wrong character entered.");
+                        Console.WriteLine("Wrong character entered.");
                     }
                 }
 
@@ -489,31 +489,31 @@ public class Doctor
 
             }
             if(option==4){
-                console.WriteLine("Day off request.");
+                Console.WriteLine("Day off request.");
                 Console.WriteLine("Enter your first day off: ");
-                string dateOfDayOff=console.ReadLine();
+                string dateOfDayOff=Console.ReadLine();
                 Console.WriteLine("Enter duration: ");
-                int duration=convert.ToInt32(console.ReadLine());
+                int duration=Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter cause: ");
-                string cause=console.ReadLine();
+                string cause=Console.ReadLine();
                 Console.WriteLine("Is it urgent? Type yes or no: ");
-                string urgency=console.ReadLine();
+                string urgency=Console.ReadLine();
                 if(urgency=="yes"){
                     string state="accepted";
-                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,sttate,cause);
+                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,state,cause);
                     DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
                     dayOffRequests.allDayOffRequests.Add(dayOffRequest);
                     DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 
                 }else if(urgency=="no"){
                     string state="on hold";
-                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,sttate,cause);
+                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,state,cause);
                     DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
                     dayOffRequests.allDayOffRequests.Add(dayOffRequest);
                     DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 
                 }else{
-                    console.WriteLine("Wrong input.");
+                    Console.WriteLine("Wrong input.");
                 }
 
 
