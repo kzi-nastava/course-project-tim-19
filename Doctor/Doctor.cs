@@ -500,17 +500,17 @@ public class Doctor
                 string urgency=Console.ReadLine();
                 if(urgency=="yes"){
                     string state="accepted";
-                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,state,cause);
+                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequest.FindNextIdForRequest), doctor.id,dateOfDayOff,duration,state,cause);
                     DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
-                    dayOffRequests.allDayOffRequests.Add(dayOffRequest);
-                    DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
+                    //dayOffRequests.allDayOffRequests.Add(dayOffRequest);
+                    //DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 
                 }else if(urgency=="no"){
                     string state="on hold";
-                    DayOffRequest dayOffRequest=new DayOffRequest(doctor.id,dateOfDayOff,duration,state,cause);
+                    DayOffRequest dayOffRequest=new DayOffRequest(Convert.ToInt32(DayOffRequest.FindNextIdForRequest), doctor.id,dateOfDayOff,duration,state,cause);
                     DayOffRequestsFactory dayOffRequests=new DayOffRequestsFactory("Data/dayOffRequests.json");
-                    dayOffRequests.allDayOffRequests.Add(dayOffRequest);
-                    DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
+                    //dayOffRequests.allDayOffRequests.Add(dayOffRequest);
+                    //DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
 
                 }else{
                     Console.WriteLine("Wrong input.");

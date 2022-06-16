@@ -33,10 +33,12 @@ public class Secretary{
         ReferralsFactory referralsFectory = new ReferralsFactory("Data/referrals.json");
         DynamicEquipmentFactory dynamicEquipmentFactory = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
         RoomFactory roomFactory = new RoomFactory("Data/rooms.json");
+        DayOffRequestsFactory dayOffRequestsFactory = new DayOffRequestsFactory("Data/dayOffRequests.json");
+        ReviewedDaysOffFactory reviewedDaysOffFactory = new ReviewedDaysOffFactory("Data/reviewedDaysOff.json");
         Console.WriteLine("Welcome, " + secretary.name + "!");
         Console.WriteLine("MENU FOR SECRETARY");
         while (true){
-            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Create urgent appointment\n5. Create request for missing equipment\n6. Rearrange dynamic equipment\n7. Log out");
+            Console.WriteLine("1. Patient accounts management\n2. Requests for modification and deletion of doctor appointments management\n3. Create a doctors appointment for patient via their referral\n4. Create urgent appointment\n5. Create request for missing equipment\n6. Rearrange dynamic equipment\n7. Manage requests for day off\n8. Log out");
             Console.WriteLine("Enter the option: ");
             var optionForMainMenu = Console.ReadLine();
             if (optionForMainMenu == "1"){
@@ -105,6 +107,8 @@ public class Secretary{
             } else if (optionForMainMenu == "6"){
                 DynamicEquipment.RearrangeTheEquipment(roomFactory.allRooms, dynamicEquipmentFactory.allEquipment);
             } else if (optionForMainMenu == "7"){
+                ReviewedDaysOffFactory.ReviewDayOffRequests();
+            } else if (optionForMainMenu == "8"){
                 break;
             } else {
                 Console.WriteLine("You entered wrong option! Please try again.");
