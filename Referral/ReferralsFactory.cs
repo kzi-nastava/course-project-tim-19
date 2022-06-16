@@ -8,4 +8,9 @@ public class ReferralsFactory{
             allRefferals = referrals;
         }
     }
+
+    public static void UpdateReferrals(List<Referral> allRefferals){
+        var convertedReferrals = JsonConvert.SerializeObject(allRefferals, Formatting.Indented);
+        File.WriteAllText("Data/referrals.json", convertedReferrals);
+    }
 }

@@ -171,7 +171,7 @@ public class Patient
                 Console.WriteLine("You entered wrong answer! Please try again.");
             }
         }
-        List<Recipe> recipes = new List<Recipe>();
+        List<int> recipes = new List<int>();
         if (weight != null && bloodType != null){
             MedicalRecord newMedicalRecord = new MedicalRecord(Convert.ToInt32(height), float.Parse(weight), bloodType, previousIllnesses, allergens); //verification
             if (name != null && email != null && password != null){

@@ -8,4 +8,9 @@ public class DoctorAppointmentsFactory{
             allDoctorAppointments = doctorAppointments;
         }
     }
+
+    public static void UpdateDoctorAppointments(List<DoctorAppointment> allDoctorAppointments){
+        var convertedDoctorAppointments = JsonConvert.SerializeObject(allDoctorAppointments, Formatting.Indented);
+        File.WriteAllText("Data/doctorAppointments.json", convertedDoctorAppointments);
+    }
 }

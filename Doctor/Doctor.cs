@@ -411,17 +411,17 @@ public class Doctor
                         patients.allPatients.Add(appointmentToDo.patient);
                         PatientsFactory.UpdatePatients(patients.allPatients);
 
-                        console.WriteLine("Enter id of the room where physical examination is done: ");
-                        int roomId=convert.ToInt32(console.ReadLine());
+                        Console.WriteLine("Enter id of the room where physical examination is done: ");
+                        int roomId=Convert.ToInt32(Console.ReadLine());
 
                         RoomFactory rooms = new RoomFactory("Data/rooms.json");
-                        Room foundRoom=FindRoomById(roomId,rooms.allRooms);
+                        Room foundRoom=Room.FindRoomById(roomId,rooms.allRooms);
                         DynamicEquipmentFactory equipment = new DynamicEquipmentFactory("Data/dynamicEquipment.json");
 
 
-                        List<DynamicEquipment> roomEquipment=FingAllEquipmentsByIds(foundRoom.equipmentIds,equipment.allEquipment);
-                        List<int> countedEquipment=CountTheEquipment(roomEquipment);
-                        console.WriteLine("Equipment in room with id ",roomId,":");
+                        List<DynamicEquipment> roomEquipment=DynamicEquipment.FindAllEquipmentByIds(foundRoom.equipmentIds,equipment.allEquipment);
+                        List<int> countedEquipment=DynamicEquipment.CountTheEquipment(roomEquipment);
+                        Console.WriteLine("Equipment in room with id ",roomId,":");
                         Console.WriteLine("SterileGauze Hanzaplast Injection Bandage SterileGloves PainKiller:", countedEquipment);
 
                         Console.WriteLine("Enter equipment that was used for physical examination:");
@@ -450,7 +450,7 @@ public class Doctor
                 foreach (Medicine medicine in medicines.allMedicines){
                     if(id==medicine.id){
                         medicines.allMedicines.Remove(medicine);
-                        medicineToVerify=medicine;
+                        //medicineToVerify=medicine;
                         break;
                     }
                 }
@@ -458,27 +458,27 @@ public class Doctor
                 MedicinesFactory.UpdateMedicineRequests(medicines.allMedicines);
                 
                 Console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
-                int option= Convert.ToInt32(Console.ReadLine());
-                while(option!=3){
+                int entry= Convert.ToInt32(Console.ReadLine());
+                while(entry!=3){
                     Console.WriteLine("Enter option:\n1. Accept\n2. Reject\n3. Exit");
-                    int option= Convert.ToInt32(Console.ReadLine());
-                    if (option==1){
+                    int newEntry= Convert.ToInt32(Console.ReadLine());
+                    if (newEntry==1){
                         //MedicinesFactory medicines = new MedicinesFactory("Data/medicine.json");
                         //medicines.allMedicines.Add(medicineToVerify);
                         MedicinesFactory.UpdateMedicines(medicines.allMedicines);
                         Console.WriteLine("Medicine accepted successfully.");
 
-                    }else if(option ==2){
+                    }else if(newEntry ==2){
                         Console.WriteLine("Add comment: ");
                         var comment=Console.ReadLine();
 
                         RejectedMedicinesFactory rejectedMedicines = new RejectedMedicinesFactory("Data/rejectedMedicine.json");
-                        RejectedMedicine rejectedMedicine=new RejectedMedicine(medicineToVerify,comment);
-                        rejectedMedicines.allRejectedMedicines.Add(rejectedMedicine);
+                        //RejectedMedicine rejectedMedicine=new RejectedMedicine(medicineToVerify,comment);
+                        //rejectedMedicines.allRejectedMedicines.Add(rejectedMedicine);
                         MedicinesFactory.UpdateMedicines(medicines.allMedicines);
                         
 
-                    }else if(option==3){
+                    }else if(newEntry==3){
                         break;
                     }else{
                         Console.WriteLine("Wrong character entered.");

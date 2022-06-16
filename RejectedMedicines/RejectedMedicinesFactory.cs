@@ -1,9 +1,9 @@
 using Newtonsoft.Json;
-public class RejectedMedicinesFacotry{
+public class RejectedMedicinesFactory{
     public List<RejectedMedicine> allRejectedMedicines { get; set; } = null!;
 
-    public static void RejectedMedicinesFactory(string path){
-        var rejectedMedicines = JsonConvert.DeserializeObject<List<rejectedMedicine>>(File.ReadAllText(path));
+    public RejectedMedicinesFactory(string path){
+        var rejectedMedicines = JsonConvert.DeserializeObject<List<RejectedMedicine>>(File.ReadAllText(path));
         if (rejectedMedicines != null){
             allRejectedMedicines = rejectedMedicines;
         }

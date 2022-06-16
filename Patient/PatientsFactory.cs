@@ -8,4 +8,9 @@ public class PatientsFactory{
             allPatients = patients;
         }
     }
+
+    public static void UpdatePatients(List<Patient> allPatients){
+        var convertedPatients = JsonConvert.SerializeObject(allPatients, Formatting.Indented);
+        File.WriteAllText("Data/patients.json", convertedPatients);
+    }
 }
