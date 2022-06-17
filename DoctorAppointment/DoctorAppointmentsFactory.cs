@@ -229,9 +229,8 @@ public class DoctorAppointmentsFactory{
             var patientsId=Console.ReadLine();
             Patient patient = patientsFactory.FindById(Convert.ToInt32(patientsId));
             if(patient!=null){
-                Console.WriteLine("Enter date and time: ");
+                Console.WriteLine("Enter date and time (dd/mm/yyyy): ");
                 var dateTime=Console.ReadLine();
-                List<DateTime> availableDates=doctor.CheckAvailability(Convert.ToDateTime(dateTime));
                 Console.WriteLine("Enter emergency (0 for urgent, 1 for not-urgent): ");
                 var emergency= Convert.ToInt32(Console.ReadLine());
 
@@ -247,8 +246,7 @@ public class DoctorAppointmentsFactory{
                     doctor.doctorAppointments.Add(Convert.ToInt32(id));
                     doctors.GetAllDoctors().Add(doctor);
                     doctors.UpdateData();
-                    
-                    //doctor.setUpAppointment(AvailableDates);                 
+                                    
                 }
                 else{
                     Console.WriteLine("Incorrect input. Enter 0 for urgent or 1 for not-urgent.");
@@ -262,6 +260,37 @@ public class DoctorAppointmentsFactory{
         else{
             Console.WriteLine("Id already exists.");
         }
+        
+    }
+
+    
+
+    public static void UpdateAppointment(Doctor doctor,DoctorAppointment appointmentToChange){
+        int option=0;
+        DoctorAppointmentsFactory appointmentsFactory = new DoctorAppointmentsFactory();
+        
+            while(option!=3){
+                Console.WriteLine("What do you want to update? (Select number)");
+                Console.WriteLine("1. Date and time\n2. Emergency\n3. Exit");
+                option=Convert.ToInt32(Console.ReadLine());
+                if (option==1 ||option==2 ){
+                    if(option==1){
+                        doctor.ReviewTimetable();
+                    }
+
+                    var foundDoctorAppointment=allDoctorAppointments.SingleOrDefault(x=>x.id==appointmentToChange.id);
+                    if (foundDoctorAppointment!=null){
+                        allDoctorAppointments.Remove(foundDoctorAppointment);
+                    }
+                    appointmentToChange.UpdateDoctorAppointment(option);
+                    allDoctorAppointments.Add(appointmentToChange);
+                    appointmentsFactory.UpdateData();
+
+                }
+                else if (option!=3){
+                    Console.WriteLine("Wrong option entered.");
+                }
+            }
         
     }
 

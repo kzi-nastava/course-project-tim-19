@@ -24,6 +24,7 @@ public class MedicalRecord
         foreach (var allergen in allergens){
             allergens += allergen + " ";
         }
+        Console.WriteLine(allergens);
         return "MedicalRecord [height: " + height + "cm, weight: " + weight + "kg, blood type: " + bloodType + ", previous illnesses: [" + illnesses + "], allergens: [" + allergens + "]]"; 
     }
 

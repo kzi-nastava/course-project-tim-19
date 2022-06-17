@@ -1,12 +1,12 @@
 [
-    {
-      "referralsId": 1,
-      "patientsId": 1,
-      "doctorsId": 1
-    },
-    {
-      "referralsId": 2,
-      "patientsId": 2,
-      "doctorsId": 2
-    }
-  ]
+  {
+    "referralsId": 1,
+    "patientsId": 1,
+    "doctorsId": 1
+  },
+  {
+    "referralsId": 2,
+    "patientsId": 2,
+    "doctorsId": 2
+  }
+]

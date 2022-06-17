@@ -1,49 +1,5 @@
 [
   {
-    "id": 1,
-    "doctorsId": 1,
-    "patient": {
-        "id": 1,
-        "name": "Andrea Katzenberger",
-        "email": "andreak@gmail.com",
-        "password": "andrea123",
-        "medicalRecord": {
-          "height": 170,
-          "weight": 52.1,
-          "bloodType": "A+",
-          "previousIllnesses": [],
-          "allergens": []
-        },
-        "blocked": 0,
-        "recipes": [1,2],
-        "referralsId": 1
-      },
-    "dateTime": "2022-05-17T10:45:00",
-    "emergency": 1
-  },
-  {
-    "id": 3,
-    "doctorsId": 1,
-    "patient": {
-      "id": 1,
-      "name": "Andrea Katzenberger",
-      "email": "andreak@gmail.com",
-      "password": "andrea123",
-      "medicalRecord": {
-        "height": 170,
-        "weight": 52.1,
-        "bloodType": "A+",
-        "previousIllnesses": [],
-        "allergens": []
-      },
-      "blocked": 0,
-      "recipes": [1,2],
-      "referralsId": 1
-    },
-    "dateTime": "2022-05-20T07:30:00",
-    "emergency": 1
-  },
-  {
     "id": 5,
     "doctorsId": 2,
     "patient": {
@@ -59,7 +15,10 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [1,2],
+      "recipes": [
+        1,
+        2
+      ],
       "referralsId": 1
     },
     "dateTime": "2022-05-24T12:00:00",
@@ -81,14 +40,68 @@
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [1,2],
+      "recipes": [
+        1,
+        2
+      ],
       "referralsId": 1
     },
     "dateTime": "2022-06-01T16:30:00",
     "emergency": 0
   },
   {
-    "id": 4,
+    "id": 7,
+    "doctorsId": 1,
+    "patient": {
+      "id": 2,
+      "name": "Bojana Popov",
+      "email": "bojanapopov@gmail.com",
+      "password": "bojana123",
+      "medicalRecord": {
+        "height": 162,
+        "weight": 64.0,
+        "bloodType": "A-",
+        "previousIllnesses": [],
+        "allergens": []
+      },
+      "blocked": 0,
+      "recipes": [
+        1
+      ],
+      "referralsId": 2
+    },
+    "dateTime": "2022-11-11T00:00:00",
+    "emergency": 1
+  },
+  {
+    "id": 3,
+    "doctorsId": 1,
+    "patient": {
+      "id": 1,
+      "name": "Andrea Katzenberger",
+      "email": "andreak@gmail.com",
+      "password": "andrea123",
+      "medicalRecord": {
+        "height": 150,
+        "weight": 100.0,
+        "bloodType": "A+",
+        "previousIllnesses": [],
+        "allergens": [
+          "newalergenens"
+        ]
+      },
+      "blocked": 0,
+      "recipes": [
+        1,
+        2
+      ],
+      "referralsId": 1
+    },
+    "dateTime": "2022-05-20T07:30:00",
+    "emergency": 1
+  },
+  {
+    "id": 1,
     "doctorsId": 2,
     "patient": {
       "id": 1,
@@ -97,16 +110,19 @@
       "password": "andrea123",
       "medicalRecord": {
         "height": 170,
-        "weight": 52.1,
+        "weight": 35.0,
         "bloodType": "A+",
         "previousIllnesses": [],
         "allergens": []
       },
       "blocked": 0,
-      "recipes": [1,2],
+      "recipes": [
+        1,
+        2
+      ],
       "referralsId": 1
     },
-    "dateTime": "2022-05-01T15:00:00",
-    "emergency": 1
+    "dateTime": "2022-06-01T16:30:00",
+    "emergency": 0
   }
 ]

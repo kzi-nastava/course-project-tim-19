@@ -50,10 +50,11 @@ public class DynamicEquipmentFactory{
         return foundEquipment;
     }
 
-    public List<int> CountTheEquipment(){
+    public List<int> CountTheEquipment(List<DynamicEquipment> dynamicEquipment=null){
         List<int> countedEquipment = new List<int>();
         int sterileGauzes = 0, hanzaplasts = 0, injections = 0, bandages = 0, sterileGloves = 0, painKillers = 0;
-        foreach(DynamicEquipment equipment in allDynamicEquipment){
+        if(dynamicEquipment!=null){
+            foreach(DynamicEquipment equipment in dynamicEquipment){
             if (equipment.type == (EquipmentType)0){
                 sterileGauzes++;
             } else if (equipment.type == (EquipmentType)1){
@@ -68,6 +69,24 @@ public class DynamicEquipmentFactory{
                 painKillers++;
             }
         }
+        }else{
+            foreach(DynamicEquipment equipment in allDynamicEquipment){
+            if (equipment.type == (EquipmentType)0){
+                sterileGauzes++;
+            } else if (equipment.type == (EquipmentType)1){
+                hanzaplasts++;
+            } else if (equipment.type == (EquipmentType)2){
+                injections++;
+            } else if (equipment.type == (EquipmentType)3){
+                bandages++;
+            } else if (equipment.type == (EquipmentType)4){
+                sterileGloves++;
+            } else {
+                painKillers++;
+            }
+        }
+        }
+        
         countedEquipment.Add(sterileGauzes);
         countedEquipment.Add(hanzaplasts);
         countedEquipment.Add(injections);

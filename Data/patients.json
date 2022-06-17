@@ -1,21 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Andrea Katzenberger",
-    "email": "andreak@gmail.com",
-    "password": "andrea123",
-    "medicalRecord": {
-      "height": 170,
-      "weight": 52.1,
-      "bloodType": "A+",
-      "previousIllnesses": [],
-      "allergens": []
-    },
-    "blocked": 0,
-    "recipes": [1,2],
-    "referralsId": 1
-  },
-  {
     "id": 2,
     "name": "Bojana Popov",
     "email": "bojanapopov@gmail.com",
@@ -28,7 +12,9 @@
       "allergens": []
     },
     "blocked": 0,
-    "recipes": [1],
+    "recipes": [
+      1
+    ],
     "referralsId": 2
   },
   {
@@ -70,7 +56,7 @@
   },
   {
     "id": 6,
-    "name": "Zoran Zoric",
+    "name": "Zorana",
     "email": "zoricz99@gmail.com",
     "password": "zoki123",
     "medicalRecord": {
@@ -85,5 +71,25 @@
     "blocked": 0,
     "recipes": [],
     "referralsId": 0
+  },
+  {
+    "id": 1,
+    "name": "Andrea Katzenberger",
+    "email": "andreak@gmail.com",
+    "password": "andrea123",
+    "medicalRecord": {
+      "height": 170,
+      "weight": 35.0,
+      "bloodType": "A+",
+      "previousIllnesses": [],
+      "allergens": []
+    },
+    "blocked": 0,
+    "recipes": [
+      1,
+      2,
+      4
+    ],
+    "referralsId": 3
   }
 ]

@@ -2,8 +2,8 @@ using Newtonsoft.Json;
 public class RecipesFactory{
     public static List<Recipe> allRecipes { get; set; } = null!;
 
-    public RecipesFactory(string path){
-        var recipes = JsonConvert.DeserializeObject<List<Recipe>>(File.ReadAllText(path));
+    public RecipesFactory(){
+        var recipes = JsonConvert.DeserializeObject<List<Recipe>>(File.ReadAllText("Data/recipes.json"));
         if (recipes != null){
             allRecipes = recipes;
         }

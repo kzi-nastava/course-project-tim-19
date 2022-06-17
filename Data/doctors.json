@@ -1,18 +1,36 @@
 [
   {
-    "id": 1,
-    "name": "Pera Peric",
-    "email": "peraperic@gmail.com",
-    "password": "pera123",
-    "field": 0,
-    "doctorAppointments": [1, 2, 3]
-  },
-  {
     "id": 2,
     "name": "Tijana Đokić",
     "email": "tijana@gmail.com",
     "password": "tijana123",
     "field": 1,
-    "doctorAppointments": [4, 5, 6]
+    "doctorAppointments": [
+      5,
+      6
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Pera Peric",
+    "email": "1",
+    "password": "1",
+    "field": 0,
+    "doctorAppointments": [
+      2,
+      3
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Pera Peric",
+    "email": "1",
+    "password": "1",
+    "field": 0,
+    "doctorAppointments": [
+      2,
+      3,
+      7
+    ]
   }
 ]

@@ -24,7 +24,7 @@ public class DayOffRequestsFactory{
         }
     }
 
-    public static int FindNextId(){
+    public int FindNextId(){
         List<int> allIds = new List<int>();
         foreach (DayOffRequest request in allDayOffRequests){
             allIds.Add(request.id);
@@ -44,6 +44,21 @@ public class DayOffRequestsFactory{
             }
         }
         return null;
+    }
+
+    public static void CreateDayOffRequest(DayOffRequest dayOffRequest){
+        DayOffRequestsFactory dayOffRequestsFactory=new DayOffRequestsFactory();
+        allDayOffRequests.Add(dayOffRequest);
+        dayOffRequestsFactory.UpdateData();
+        //             var foundDayOffRequests=allDoctorAppointments.SingleOrDefault(x=>x.id==appointmentToChange.id);
+        //             if (foundDoctorAppointment!=null){
+        //                 allDoctorAppointments.Remove(foundDoctorAppointment);
+        //             }
+        //             appointmentToChange.UpdateDoctorAppointment(option);
+        //             allDoctorAppointments.Add(appointmentToChange);
+        //             appointmentsFactory.UpdateData();
+        //             //dayOffRequests.allDayOffRequests.Add(dayOffRequest);
+        //             //DayOffRequestsFactory.UpdateDayOffRequests(dayOffRequests.allDayOffRequests);
     }
 
 }

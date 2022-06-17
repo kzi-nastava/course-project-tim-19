@@ -1,21 +1,21 @@
 ﻿class Program{
     public static void findDoctor(string email,string password){
     
-    DoctorsFactory doctorsFactory = new DoctorsFactory();
-    foreach (var doctor in doctorsFactory.GetAllDoctors()){
-                    if(doctor.email == email && doctor.password == password){
-                        Doctor.doctorMenu(doctor);
+        DoctorsFactory doctorsFactory = new DoctorsFactory();
+        foreach (var doctor in doctorsFactory.GetAllDoctors()){
+                        if(doctor.email == email && doctor.password == password){
+                            Doctor.doctorMenu(doctor);
+                        }
                     }
-                }
     }
-public static void findSecretary(string email,string password){
+    public static void findSecretary(string email,string password){
     
-    SecretariesFactory secretariesFactory = new SecretariesFactory();
-    foreach (var secretary in secretariesFactory.GetAllSecretaries()){
-                    if(secretary.email == email && secretary.password == password){
-                        Secretary.Menu(secretary);
+        SecretariesFactory secretariesFactory = new SecretariesFactory();
+        foreach (var secretary in secretariesFactory.GetAllSecretaries()){
+                        if(secretary.email == email && secretary.password == password){
+                            Secretary.Menu(secretary);
+                        }
                     }
-                }
     }
     public static void login(){
         while(true){
